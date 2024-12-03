@@ -1,566 +1,566 @@
 digraph "transformResult" {  
-(METHOD,transformResult)
-(PARAM,com.squareup.picasso.Request)
-(PARAM,android.graphics.Bitmap)
-(PARAM,int)
-(BLOCK,&lt;empty&gt;,&lt;empty&gt;)
-(LOCAL,int)
-(LOCAL,int)
-(LOCAL,boolean)
-(LOCAL,android.graphics.Matrix)
-(LOCAL,boolean)
-(LOCAL,float)
-(LOCAL,int)
-(LOCAL,float)
-(LOCAL,byte)
-(LOCAL,boolean)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,boolean)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,byte)
-(LOCAL,boolean)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,byte)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,double)
-(LOCAL,double)
-(LOCAL,int)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,boolean)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,double)
-(LOCAL,double)
-(LOCAL,int)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,boolean)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,int)
-(LOCAL,int)
-(LOCAL,int)
-(LOCAL,int)
-(LOCAL,int)
-(LOCAL,boolean)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,int)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,float)
-(LOCAL,android.graphics.Bitmap)
-(LOCAL,android.graphics.Matrix)
-(LOCAL,int)
-(LOCAL,int)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(getWidth,result.getWidth()
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(getHeight,result.getHeight()
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.onlyScaleDown)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,onlyScaleDown,onlyScaleDown)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(LITERAL,0,drawX)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(LITERAL,0,drawY)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.alloc,new)
-(&lt;init&gt;,$u0.android.graphics.Matrix()
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(needsMatrixTransform,data.needsMatrixTransform()
-(IDENTIFIER)
-(&lt;operator&gt;.equals,$stack00)
-(IDENTIFIER)
-(LITERAL,0,$stack00)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.targetWidth)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,targetWidth,targetWidth)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.targetHeight)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,targetHeight,targetHeight)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.rotationDegrees)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,rotationDegrees,rotationDegrees)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.compare,targetRotation)
-(IDENTIFIER)
-(LITERAL,0.0F,targetRotation)
-(&lt;operator&gt;.equals,$stack00)
-(IDENTIFIER)
-(LITERAL,0,$stack00)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.hasRotationPivot)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,hasRotationPivot,hasRotationPivot)
-(&lt;operator&gt;.equals,$stack000)
-(IDENTIFIER)
-(LITERAL,0,$stack000)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.rotationPivotX)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,rotationPivotX,rotationPivotX)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.rotationPivotY)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,rotationPivotY,rotationPivotY)
-(setRotate,matrix.setRotate(targetRotation,)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(UNKNOWN,goto)
-(setRotate,matrix.setRotate(targetRotation)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.centerCrop)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,centerCrop,centerCrop)
-(&lt;operator&gt;.equals,$stack00)
-(IDENTIFIER)
-(LITERAL,0,$stack00)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.compare,widthRatio)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(int)
-(TYPE_REF,int,int)
-(IDENTIFIER)
-(&lt;operator&gt;.lessEqualsThan,$i0)
-(IDENTIFIER)
-(LITERAL,0,$i0)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,heightRatio)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.multiplication,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(double)
-(TYPE_REF,double,double)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(ceil,ceil($stack00)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(int)
-(TYPE_REF,int,int)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.subtraction,inHeight)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(LITERAL,2,$stack00)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(UNKNOWN,goto)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,widthRatio)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.multiplication,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(double)
-(TYPE_REF,double,double)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(ceil,ceil($stack00)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(int)
-(TYPE_REF,int,int)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.subtraction,inWidth)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(LITERAL,2,$stack00)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(shouldResize,shouldResize(onlyScaleDown,)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.equals,$stack00)
-(IDENTIFIER)
-(LITERAL,0,$stack00)
-(preScale,matrix.preScale(scaleX,)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(UNKNOWN,goto)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.fieldAccess,data.centerInside)
-(IDENTIFIER)
-(FIELD_IDENTIFIER,centerInside,centerInside)
-(&lt;operator&gt;.equals,$stack00)
-(IDENTIFIER)
-(LITERAL,0,$stack00)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.compare,widthRatio)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(int)
-(TYPE_REF,int,int)
-(IDENTIFIER)
-(&lt;operator&gt;.greaterEqualsThan,$i1)
-(IDENTIFIER)
-(LITERAL,0,$i1)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(UNKNOWN,goto)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(shouldResize,shouldResize(onlyScaleDown,)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.equals,$stack00)
-(IDENTIFIER)
-(LITERAL,0,$stack00)
-(preScale,matrix.preScale(scaleX,)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(UNKNOWN,goto)
-(&lt;operator&gt;.notEquals,targetWidth)
-(IDENTIFIER)
-(LITERAL,0,targetWidth)
-(&lt;operator&gt;.equals,targetHeight)
-(IDENTIFIER)
-(LITERAL,0,targetHeight)
-(&lt;operator&gt;.notEquals,targetWidth)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.equals,targetHeight)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.equals,targetWidth)
-(IDENTIFIER)
-(LITERAL,0,targetWidth)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(UNKNOWN,goto)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.equals,targetHeight)
-(IDENTIFIER)
-(LITERAL,0,targetHeight)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(UNKNOWN,goto)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.division,$stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(shouldResize,shouldResize(onlyScaleDown,)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.equals,$stack00)
-(IDENTIFIER)
-(LITERAL,0,$stack00)
-(preScale,matrix.preScale(widthRatio,)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.equals,exifRotation)
-(IDENTIFIER)
-(LITERAL,0,exifRotation)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(&lt;operator&gt;.cast,(float)
-(TYPE_REF,float,float)
-(IDENTIFIER)
-(preRotate,matrix.preRotate($stack00)
-(IDENTIFIER)
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(createBitmap,createBitmap(result,)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(IDENTIFIER)
-(LITERAL,1,createBitmap(result,)
-(&lt;operator&gt;.equals,targetWidth#27)
-(IDENTIFIER)
-(IDENTIFIER)
-(recycle,result.recycle()
-(IDENTIFIER)
-(&lt;operator&gt;.assignment)
-(IDENTIFIER)
-(IDENTIFIER)
-(RETURN,return)
-(IDENTIFIER)
-(MODIFIER,STATIC)
-(METHOD_RETURN,android.graphics.Bitmap)
+"111669150182" [label = <(METHOD,transformResult)<SUB>486</SUB>> ]
+"115964117953" [label = <(PARAM,com.squareup.picasso.Request data)<SUB>486</SUB>> ]
+"115964117954" [label = <(PARAM,android.graphics.Bitmap result)<SUB>486</SUB>> ]
+"115964117955" [label = <(PARAM,int exifRotation)<SUB>486</SUB>> ]
+"25769804262" [label = <(BLOCK,&lt;empty&gt;,&lt;empty&gt;)> ]
+"94489282991" [label = <(LOCAL,int inWidth: int)> ]
+"94489282992" [label = <(LOCAL,int inHeight: int)> ]
+"94489282993" [label = <(LOCAL,boolean onlyScaleDown: boolean)> ]
+"94489282994" [label = <(LOCAL,android.graphics.Matrix matrix: android.graphics.Matrix)> ]
+"94489282995" [label = <(LOCAL,boolean $stack20: boolean)> ]
+"94489282996" [label = <(LOCAL,float $stack22: float)> ]
+"94489282997" [label = <(LOCAL,int targetHeight: int)> ]
+"94489282998" [label = <(LOCAL,float targetRotation: float)> ]
+"94489282999" [label = <(LOCAL,byte $stack34: byte)> ]
+"94489283000" [label = <(LOCAL,boolean $stack36: boolean)> ]
+"94489283001" [label = <(LOCAL,float $stack37: float)> ]
+"94489283002" [label = <(LOCAL,float $stack38: float)> ]
+"94489283003" [label = <(LOCAL,float $stack39: float)> ]
+"94489283004" [label = <(LOCAL,float $stack40: float)> ]
+"94489283005" [label = <(LOCAL,boolean $stack41: boolean)> ]
+"94489283006" [label = <(LOCAL,float $stack44: float)> ]
+"94489283007" [label = <(LOCAL,float $stack45: float)> ]
+"94489283008" [label = <(LOCAL,float $stack52: float)> ]
+"94489283009" [label = <(LOCAL,float $stack53: float)> ]
+"94489283010" [label = <(LOCAL,float $stack59: float)> ]
+"94489283011" [label = <(LOCAL,float $stack60: float)> ]
+"94489283012" [label = <(LOCAL,float $stack61: float)> ]
+"94489283013" [label = <(LOCAL,float $stack62: float)> ]
+"94489283014" [label = <(LOCAL,byte $stack63: byte)> ]
+"94489283015" [label = <(LOCAL,boolean $stack64: boolean)> ]
+"94489283016" [label = <(LOCAL,float $stack72: float)> ]
+"94489283017" [label = <(LOCAL,float $stack73: float)> ]
+"94489283018" [label = <(LOCAL,float $stack74: float)> ]
+"94489283019" [label = <(LOCAL,float $stack75: float)> ]
+"94489283020" [label = <(LOCAL,byte $stack76: byte)> ]
+"94489283021" [label = <(LOCAL,float $stack77: float)> ]
+"94489283022" [label = <(LOCAL,float $stack78: float)> ]
+"94489283023" [label = <(LOCAL,float $stack79: float)> ]
+"94489283024" [label = <(LOCAL,double $stack80: double)> ]
+"94489283025" [label = <(LOCAL,double $stack81: double)> ]
+"94489283026" [label = <(LOCAL,int $stack82: int)> ]
+"94489283027" [label = <(LOCAL,float $stack83: float)> ]
+"94489283028" [label = <(LOCAL,float $stack84: float)> ]
+"94489283029" [label = <(LOCAL,boolean $stack85: boolean)> ]
+"94489283030" [label = <(LOCAL,float $stack87: float)> ]
+"94489283031" [label = <(LOCAL,float $stack88: float)> ]
+"94489283032" [label = <(LOCAL,float $stack89: float)> ]
+"94489283033" [label = <(LOCAL,double $stack90: double)> ]
+"94489283034" [label = <(LOCAL,double $stack91: double)> ]
+"94489283035" [label = <(LOCAL,int $stack92: int)> ]
+"94489283036" [label = <(LOCAL,float $stack93: float)> ]
+"94489283037" [label = <(LOCAL,float $stack94: float)> ]
+"94489283038" [label = <(LOCAL,boolean $stack100: boolean)> ]
+"94489283039" [label = <(LOCAL,float $stack102: float)> ]
+"94489283040" [label = <(LOCAL,float $stack103: float)> ]
+"94489283041" [label = <(LOCAL,int drawX: int)> ]
+"94489283042" [label = <(LOCAL,int drawY: int)> ]
+"94489283043" [label = <(LOCAL,int drawWidth: int)> ]
+"94489283044" [label = <(LOCAL,int drawHeight: int)> ]
+"94489283045" [label = <(LOCAL,int targetWidth: int)> ]
+"94489283046" [label = <(LOCAL,boolean $stack35: boolean)> ]
+"94489283047" [label = <(LOCAL,float widthRatio: float)> ]
+"94489283048" [label = <(LOCAL,float heightRatio: float)> ]
+"94489283049" [label = <(LOCAL,int newSize: int)> ]
+"94489283050" [label = <(LOCAL,float scaleX: float)> ]
+"94489283051" [label = <(LOCAL,float scaleY: float)> ]
+"94489283052" [label = <(LOCAL,float $stack66: float)> ]
+"94489283053" [label = <(LOCAL,float $stack54: float)> ]
+"94489283054" [label = <(LOCAL,float $stack46: float)> ]
+"94489283055" [label = <(LOCAL,android.graphics.Bitmap targetWidth#27: android.graphics.Bitmap)> ]
+"94489283056" [label = <(LOCAL,android.graphics.Matrix $u0: android.graphics.Matrix)> ]
+"94489283057" [label = <(LOCAL,int $i0: int)> ]
+"94489283058" [label = <(LOCAL,int $i1: int)> ]
+"30064778177" [label = <(&lt;operator&gt;.assignment,inWidth = result.getWidth())<SUB>487</SUB>> ]
+"68719484841" [label = <(IDENTIFIER,inWidth,inWidth = result.getWidth())<SUB>487</SUB>> ]
+"30064778178" [label = <(getWidth,result.getWidth())<SUB>487</SUB>> ]
+"68719484842" [label = <(IDENTIFIER,result,result.getWidth())<SUB>487</SUB>> ]
+"30064778179" [label = <(&lt;operator&gt;.assignment,inHeight = result.getHeight())<SUB>488</SUB>> ]
+"68719484843" [label = <(IDENTIFIER,inHeight,inHeight = result.getHeight())<SUB>488</SUB>> ]
+"30064778180" [label = <(getHeight,result.getHeight())<SUB>488</SUB>> ]
+"68719484844" [label = <(IDENTIFIER,result,result.getHeight())<SUB>488</SUB>> ]
+"30064778181" [label = <(&lt;operator&gt;.assignment,onlyScaleDown = data.onlyScaleDown)<SUB>489</SUB>> ]
+"68719484845" [label = <(IDENTIFIER,onlyScaleDown,onlyScaleDown = data.onlyScaleDown)<SUB>489</SUB>> ]
+"30064778182" [label = <(&lt;operator&gt;.fieldAccess,data.onlyScaleDown)<SUB>489</SUB>> ]
+"68719484846" [label = <(IDENTIFIER,data,onlyScaleDown = data.onlyScaleDown)<SUB>489</SUB>> ]
+"55834576133" [label = <(FIELD_IDENTIFIER,onlyScaleDown,onlyScaleDown)<SUB>489</SUB>> ]
+"30064778183" [label = <(&lt;operator&gt;.assignment,drawX = 0)<SUB>491</SUB>> ]
+"68719484847" [label = <(IDENTIFIER,drawX,drawX = 0)<SUB>491</SUB>> ]
+"90194314502" [label = <(LITERAL,0,drawX = 0)> ]
+"30064778184" [label = <(&lt;operator&gt;.assignment,drawY = 0)<SUB>492</SUB>> ]
+"68719484848" [label = <(IDENTIFIER,drawY,drawY = 0)<SUB>492</SUB>> ]
+"90194314503" [label = <(LITERAL,0,drawY = 0)> ]
+"30064778185" [label = <(&lt;operator&gt;.assignment,drawWidth = inWidth)<SUB>493</SUB>> ]
+"68719484849" [label = <(IDENTIFIER,drawWidth,drawWidth = inWidth)<SUB>493</SUB>> ]
+"68719484850" [label = <(IDENTIFIER,inWidth,drawWidth = inWidth)<SUB>493</SUB>> ]
+"30064778186" [label = <(&lt;operator&gt;.assignment,drawHeight = inHeight)<SUB>494</SUB>> ]
+"68719484851" [label = <(IDENTIFIER,drawHeight,drawHeight = inHeight)<SUB>494</SUB>> ]
+"68719484852" [label = <(IDENTIFIER,inHeight,drawHeight = inHeight)<SUB>494</SUB>> ]
+"30064778187" [label = <(&lt;operator&gt;.assignment,$u0 = new android.graphics.Matrix)<SUB>496</SUB>> ]
+"68719484853" [label = <(IDENTIFIER,$u0,$u0 = new android.graphics.Matrix)<SUB>496</SUB>> ]
+"30064778188" [label = <(&lt;operator&gt;.alloc,new android.graphics.Matrix)<SUB>496</SUB>> ]
+"30064778189" [label = <(&lt;init&gt;,$u0.android.graphics.Matrix())<SUB>496</SUB>> ]
+"68719484854" [label = <(IDENTIFIER,$u0,$u0.android.graphics.Matrix())<SUB>496</SUB>> ]
+"30064778190" [label = <(&lt;operator&gt;.assignment,matrix = $u0)<SUB>496</SUB>> ]
+"68719484855" [label = <(IDENTIFIER,matrix,matrix = $u0)<SUB>496</SUB>> ]
+"68719484856" [label = <(IDENTIFIER,$u0,matrix = $u0)<SUB>496</SUB>> ]
+"30064778191" [label = <(&lt;operator&gt;.assignment,$stack20 = data.needsMatrixTransform())<SUB>498</SUB>> ]
+"68719484857" [label = <(IDENTIFIER,$stack20,$stack20 = data.needsMatrixTransform())<SUB>498</SUB>> ]
+"30064778192" [label = <(needsMatrixTransform,data.needsMatrixTransform())<SUB>498</SUB>> ]
+"68719484858" [label = <(IDENTIFIER,data,data.needsMatrixTransform())<SUB>498</SUB>> ]
+"30064777646" [label = <(&lt;operator&gt;.equals,$stack20 == 0)<SUB>498</SUB>> ]
+"68719484859" [label = <(IDENTIFIER,$stack20,$stack20 == 0)<SUB>498</SUB>> ]
+"90194314504" [label = <(LITERAL,0,$stack20 == 0)> ]
+"30064778193" [label = <(&lt;operator&gt;.assignment,targetWidth = data.targetWidth)<SUB>499</SUB>> ]
+"68719484860" [label = <(IDENTIFIER,targetWidth,targetWidth = data.targetWidth)<SUB>499</SUB>> ]
+"30064778194" [label = <(&lt;operator&gt;.fieldAccess,data.targetWidth)<SUB>499</SUB>> ]
+"68719484861" [label = <(IDENTIFIER,data,targetWidth = data.targetWidth)<SUB>499</SUB>> ]
+"55834576134" [label = <(FIELD_IDENTIFIER,targetWidth,targetWidth)<SUB>499</SUB>> ]
+"30064778195" [label = <(&lt;operator&gt;.assignment,targetHeight = data.targetHeight)<SUB>500</SUB>> ]
+"68719484862" [label = <(IDENTIFIER,targetHeight,targetHeight = data.targetHeight)<SUB>500</SUB>> ]
+"30064778196" [label = <(&lt;operator&gt;.fieldAccess,data.targetHeight)<SUB>500</SUB>> ]
+"68719484863" [label = <(IDENTIFIER,data,targetHeight = data.targetHeight)<SUB>500</SUB>> ]
+"55834576135" [label = <(FIELD_IDENTIFIER,targetHeight,targetHeight)<SUB>500</SUB>> ]
+"30064778197" [label = <(&lt;operator&gt;.assignment,targetRotation = data.rotationDegrees)<SUB>502</SUB>> ]
+"68719484864" [label = <(IDENTIFIER,targetRotation,targetRotation = data.rotationDegrees)<SUB>502</SUB>> ]
+"30064778198" [label = <(&lt;operator&gt;.fieldAccess,data.rotationDegrees)<SUB>502</SUB>> ]
+"68719484865" [label = <(IDENTIFIER,data,targetRotation = data.rotationDegrees)<SUB>502</SUB>> ]
+"55834576136" [label = <(FIELD_IDENTIFIER,rotationDegrees,rotationDegrees)<SUB>502</SUB>> ]
+"30064778199" [label = <(&lt;operator&gt;.assignment,$stack34 = targetRotation cmpl 0.0F)<SUB>503</SUB>> ]
+"68719484866" [label = <(IDENTIFIER,$stack34,$stack34 = targetRotation cmpl 0.0F)<SUB>503</SUB>> ]
+"30064778200" [label = <(&lt;operator&gt;.compare,targetRotation cmpl 0.0F)<SUB>503</SUB>> ]
+"68719484867" [label = <(IDENTIFIER,targetRotation,targetRotation cmpl 0.0F)<SUB>503</SUB>> ]
+"90194314505" [label = <(LITERAL,0.0F,targetRotation cmpl 0.0F)> ]
+"30064777649" [label = <(&lt;operator&gt;.equals,$stack34 == 0)<SUB>503</SUB>> ]
+"68719484868" [label = <(IDENTIFIER,$stack34,$stack34 == 0)<SUB>503</SUB>> ]
+"90194314506" [label = <(LITERAL,0,$stack34 == 0)> ]
+"30064778201" [label = <(&lt;operator&gt;.assignment,$stack100 = data.hasRotationPivot)<SUB>504</SUB>> ]
+"68719484869" [label = <(IDENTIFIER,$stack100,$stack100 = data.hasRotationPivot)<SUB>504</SUB>> ]
+"30064778202" [label = <(&lt;operator&gt;.fieldAccess,data.hasRotationPivot)<SUB>504</SUB>> ]
+"68719484870" [label = <(IDENTIFIER,data,$stack100 = data.hasRotationPivot)<SUB>504</SUB>> ]
+"55834576137" [label = <(FIELD_IDENTIFIER,hasRotationPivot,hasRotationPivot)<SUB>504</SUB>> ]
+"30064777654" [label = <(&lt;operator&gt;.equals,$stack100 == 0)<SUB>504</SUB>> ]
+"68719484871" [label = <(IDENTIFIER,$stack100,$stack100 == 0)<SUB>504</SUB>> ]
+"90194314507" [label = <(LITERAL,0,$stack100 == 0)> ]
+"30064778203" [label = <(&lt;operator&gt;.assignment,$stack103 = data.rotationPivotX)<SUB>505</SUB>> ]
+"68719484872" [label = <(IDENTIFIER,$stack103,$stack103 = data.rotationPivotX)<SUB>505</SUB>> ]
+"30064778204" [label = <(&lt;operator&gt;.fieldAccess,data.rotationPivotX)<SUB>505</SUB>> ]
+"68719484873" [label = <(IDENTIFIER,data,$stack103 = data.rotationPivotX)<SUB>505</SUB>> ]
+"55834576138" [label = <(FIELD_IDENTIFIER,rotationPivotX,rotationPivotX)<SUB>505</SUB>> ]
+"30064778205" [label = <(&lt;operator&gt;.assignment,$stack102 = data.rotationPivotY)<SUB>505</SUB>> ]
+"68719484874" [label = <(IDENTIFIER,$stack102,$stack102 = data.rotationPivotY)<SUB>505</SUB>> ]
+"30064778206" [label = <(&lt;operator&gt;.fieldAccess,data.rotationPivotY)<SUB>505</SUB>> ]
+"68719484875" [label = <(IDENTIFIER,data,$stack102 = data.rotationPivotY)<SUB>505</SUB>> ]
+"55834576139" [label = <(FIELD_IDENTIFIER,rotationPivotY,rotationPivotY)<SUB>505</SUB>> ]
+"30064778207" [label = <(setRotate,matrix.setRotate(targetRotation, $stack103, $st...)<SUB>505</SUB>> ]
+"68719484876" [label = <(IDENTIFIER,matrix,matrix.setRotate(targetRotation, $stack103, $st...)<SUB>505</SUB>> ]
+"68719484877" [label = <(IDENTIFIER,targetRotation,matrix.setRotate(targetRotation, $stack103, $st...)<SUB>505</SUB>> ]
+"68719484878" [label = <(IDENTIFIER,$stack103,matrix.setRotate(targetRotation, $stack103, $st...)<SUB>505</SUB>> ]
+"68719484879" [label = <(IDENTIFIER,$stack102,matrix.setRotate(targetRotation, $stack103, $st...)<SUB>505</SUB>> ]
+"184683593908" [label = <(UNKNOWN,goto 511,goto 511)<SUB>505</SUB>> ]
+"30064777655" [label = <(setRotate,matrix.setRotate(targetRotation))<SUB>507</SUB>> ]
+"68719484880" [label = <(IDENTIFIER,matrix,matrix.setRotate(targetRotation))<SUB>507</SUB>> ]
+"68719484881" [label = <(IDENTIFIER,targetRotation,matrix.setRotate(targetRotation))<SUB>507</SUB>> ]
+"30064777648" [label = <(&lt;operator&gt;.assignment,$stack35 = data.centerCrop)<SUB>511</SUB>> ]
+"68719484882" [label = <(IDENTIFIER,$stack35,$stack35 = data.centerCrop)<SUB>511</SUB>> ]
+"30064778208" [label = <(&lt;operator&gt;.fieldAccess,data.centerCrop)<SUB>511</SUB>> ]
+"68719484883" [label = <(IDENTIFIER,data,$stack35 = data.centerCrop)<SUB>511</SUB>> ]
+"55834576140" [label = <(FIELD_IDENTIFIER,centerCrop,centerCrop)<SUB>511</SUB>> ]
+"30064777644" [label = <(&lt;operator&gt;.equals,$stack35 == 0)<SUB>511</SUB>> ]
+"68719484884" [label = <(IDENTIFIER,$stack35,$stack35 == 0)<SUB>511</SUB>> ]
+"90194314508" [label = <(LITERAL,0,$stack35 == 0)> ]
+"30064778209" [label = <(&lt;operator&gt;.assignment,$stack73 = (float) targetWidth)<SUB>512</SUB>> ]
+"68719484885" [label = <(IDENTIFIER,$stack73,$stack73 = (float) targetWidth)<SUB>512</SUB>> ]
+"30064778210" [label = <(&lt;operator&gt;.cast,(float) targetWidth)<SUB>512</SUB>> ]
+"180388626581" [label = <(TYPE_REF,float,float)<SUB>512</SUB>> ]
+"68719484886" [label = <(IDENTIFIER,targetWidth,(float) targetWidth)<SUB>512</SUB>> ]
+"30064778211" [label = <(&lt;operator&gt;.assignment,$stack72 = (float) inWidth)<SUB>512</SUB>> ]
+"68719484887" [label = <(IDENTIFIER,$stack72,$stack72 = (float) inWidth)<SUB>512</SUB>> ]
+"30064778212" [label = <(&lt;operator&gt;.cast,(float) inWidth)<SUB>512</SUB>> ]
+"180388626582" [label = <(TYPE_REF,float,float)<SUB>512</SUB>> ]
+"68719484888" [label = <(IDENTIFIER,inWidth,(float) inWidth)<SUB>512</SUB>> ]
+"30064778213" [label = <(&lt;operator&gt;.assignment,widthRatio = $stack73 / $stack72)<SUB>512</SUB>> ]
+"68719484889" [label = <(IDENTIFIER,widthRatio,widthRatio = $stack73 / $stack72)<SUB>512</SUB>> ]
+"30064778214" [label = <(&lt;operator&gt;.division,$stack73 / $stack72)<SUB>512</SUB>> ]
+"68719484890" [label = <(IDENTIFIER,$stack73,$stack73 / $stack72)<SUB>512</SUB>> ]
+"68719484891" [label = <(IDENTIFIER,$stack72,$stack73 / $stack72)<SUB>512</SUB>> ]
+"30064778215" [label = <(&lt;operator&gt;.assignment,$stack75 = (float) targetHeight)<SUB>513</SUB>> ]
+"68719484892" [label = <(IDENTIFIER,$stack75,$stack75 = (float) targetHeight)<SUB>513</SUB>> ]
+"30064778216" [label = <(&lt;operator&gt;.cast,(float) targetHeight)<SUB>513</SUB>> ]
+"180388626583" [label = <(TYPE_REF,float,float)<SUB>513</SUB>> ]
+"68719484893" [label = <(IDENTIFIER,targetHeight,(float) targetHeight)<SUB>513</SUB>> ]
+"30064778217" [label = <(&lt;operator&gt;.assignment,$stack74 = (float) inHeight)<SUB>513</SUB>> ]
+"68719484894" [label = <(IDENTIFIER,$stack74,$stack74 = (float) inHeight)<SUB>513</SUB>> ]
+"30064778218" [label = <(&lt;operator&gt;.cast,(float) inHeight)<SUB>513</SUB>> ]
+"180388626584" [label = <(TYPE_REF,float,float)<SUB>513</SUB>> ]
+"68719484895" [label = <(IDENTIFIER,inHeight,(float) inHeight)<SUB>513</SUB>> ]
+"30064778219" [label = <(&lt;operator&gt;.assignment,heightRatio = $stack75 / $stack74)<SUB>513</SUB>> ]
+"68719484896" [label = <(IDENTIFIER,heightRatio,heightRatio = $stack75 / $stack74)<SUB>513</SUB>> ]
+"30064778220" [label = <(&lt;operator&gt;.division,$stack75 / $stack74)<SUB>513</SUB>> ]
+"68719484897" [label = <(IDENTIFIER,$stack75,$stack75 / $stack74)<SUB>513</SUB>> ]
+"68719484898" [label = <(IDENTIFIER,$stack74,$stack75 / $stack74)<SUB>513</SUB>> ]
+"30064778221" [label = <(&lt;operator&gt;.assignment,$stack76 = widthRatio cmpl heightRatio)<SUB>515</SUB>> ]
+"68719484899" [label = <(IDENTIFIER,$stack76,$stack76 = widthRatio cmpl heightRatio)<SUB>515</SUB>> ]
+"30064778222" [label = <(&lt;operator&gt;.compare,widthRatio cmpl heightRatio)<SUB>515</SUB>> ]
+"68719484900" [label = <(IDENTIFIER,widthRatio,widthRatio cmpl heightRatio)<SUB>515</SUB>> ]
+"68719484901" [label = <(IDENTIFIER,heightRatio,widthRatio cmpl heightRatio)<SUB>515</SUB>> ]
+"30064778223" [label = <(&lt;operator&gt;.assignment,$i0 = (int) $stack76)> ]
+"68719484902" [label = <(IDENTIFIER,$i0,$i0 = (int) $stack76)> ]
+"30064778224" [label = <(&lt;operator&gt;.cast,(int) $stack76)> ]
+"180388626585" [label = <(TYPE_REF,int,int)> ]
+"68719484903" [label = <(IDENTIFIER,$stack76,(int) $stack76)> ]
+"30064777631" [label = <(&lt;operator&gt;.lessEqualsThan,$i0 &lt;= 0)<SUB>515</SUB>> ]
+"68719484904" [label = <(IDENTIFIER,$i0,$i0 &lt;= 0)<SUB>515</SUB>> ]
+"90194314509" [label = <(LITERAL,0,$i0 &lt;= 0)> ]
+"30064778225" [label = <(&lt;operator&gt;.assignment,$stack88 = (float) inHeight)<SUB>516</SUB>> ]
+"68719484905" [label = <(IDENTIFIER,$stack88,$stack88 = (float) inHeight)<SUB>516</SUB>> ]
+"30064778226" [label = <(&lt;operator&gt;.cast,(float) inHeight)<SUB>516</SUB>> ]
+"180388626586" [label = <(TYPE_REF,float,float)<SUB>516</SUB>> ]
+"68719484906" [label = <(IDENTIFIER,inHeight,(float) inHeight)<SUB>516</SUB>> ]
+"30064778227" [label = <(&lt;operator&gt;.assignment,$stack87 = heightRatio / widthRatio)<SUB>516</SUB>> ]
+"68719484907" [label = <(IDENTIFIER,$stack87,$stack87 = heightRatio / widthRatio)<SUB>516</SUB>> ]
+"30064778228" [label = <(&lt;operator&gt;.division,heightRatio / widthRatio)<SUB>516</SUB>> ]
+"68719484908" [label = <(IDENTIFIER,heightRatio,heightRatio / widthRatio)<SUB>516</SUB>> ]
+"68719484909" [label = <(IDENTIFIER,widthRatio,heightRatio / widthRatio)<SUB>516</SUB>> ]
+"30064778229" [label = <(&lt;operator&gt;.assignment,$stack89 = $stack88 * $stack87)<SUB>516</SUB>> ]
+"68719484910" [label = <(IDENTIFIER,$stack89,$stack89 = $stack88 * $stack87)<SUB>516</SUB>> ]
+"30064778230" [label = <(&lt;operator&gt;.multiplication,$stack88 * $stack87)<SUB>516</SUB>> ]
+"68719484911" [label = <(IDENTIFIER,$stack88,$stack88 * $stack87)<SUB>516</SUB>> ]
+"68719484912" [label = <(IDENTIFIER,$stack87,$stack88 * $stack87)<SUB>516</SUB>> ]
+"30064778231" [label = <(&lt;operator&gt;.assignment,$stack90 = (double) $stack89)<SUB>516</SUB>> ]
+"68719484913" [label = <(IDENTIFIER,$stack90,$stack90 = (double) $stack89)<SUB>516</SUB>> ]
+"30064778232" [label = <(&lt;operator&gt;.cast,(double) $stack89)<SUB>516</SUB>> ]
+"180388626587" [label = <(TYPE_REF,double,double)<SUB>516</SUB>> ]
+"68719484914" [label = <(IDENTIFIER,$stack89,(double) $stack89)<SUB>516</SUB>> ]
+"30064778233" [label = <(&lt;operator&gt;.assignment,$stack91 = ceil($stack90))<SUB>516</SUB>> ]
+"68719484915" [label = <(IDENTIFIER,$stack91,$stack91 = ceil($stack90))<SUB>516</SUB>> ]
+"30064778234" [label = <(ceil,ceil($stack90))<SUB>516</SUB>> ]
+"68719484916" [label = <(IDENTIFIER,$stack90,ceil($stack90))<SUB>516</SUB>> ]
+"30064778235" [label = <(&lt;operator&gt;.assignment,newSize = (int) $stack91)<SUB>516</SUB>> ]
+"68719484917" [label = <(IDENTIFIER,newSize,newSize = (int) $stack91)<SUB>516</SUB>> ]
+"30064778236" [label = <(&lt;operator&gt;.cast,(int) $stack91)<SUB>516</SUB>> ]
+"180388626588" [label = <(TYPE_REF,int,int)<SUB>516</SUB>> ]
+"68719484918" [label = <(IDENTIFIER,$stack91,(int) $stack91)<SUB>516</SUB>> ]
+"30064778237" [label = <(&lt;operator&gt;.assignment,$stack92 = inHeight - newSize)<SUB>517</SUB>> ]
+"68719484919" [label = <(IDENTIFIER,$stack92,$stack92 = inHeight - newSize)<SUB>517</SUB>> ]
+"30064778238" [label = <(&lt;operator&gt;.subtraction,inHeight - newSize)<SUB>517</SUB>> ]
+"68719484920" [label = <(IDENTIFIER,inHeight,inHeight - newSize)<SUB>517</SUB>> ]
+"68719484921" [label = <(IDENTIFIER,newSize,inHeight - newSize)<SUB>517</SUB>> ]
+"30064778239" [label = <(&lt;operator&gt;.assignment,drawY = $stack92 / 2)<SUB>517</SUB>> ]
+"68719484922" [label = <(IDENTIFIER,drawY,drawY = $stack92 / 2)<SUB>517</SUB>> ]
+"30064778240" [label = <(&lt;operator&gt;.division,$stack92 / 2)<SUB>517</SUB>> ]
+"68719484923" [label = <(IDENTIFIER,$stack92,$stack92 / 2)<SUB>517</SUB>> ]
+"90194314510" [label = <(LITERAL,2,$stack92 / 2)> ]
+"30064778241" [label = <(&lt;operator&gt;.assignment,drawHeight = newSize)<SUB>518</SUB>> ]
+"68719484924" [label = <(IDENTIFIER,drawHeight,drawHeight = newSize)<SUB>518</SUB>> ]
+"68719484925" [label = <(IDENTIFIER,newSize,drawHeight = newSize)<SUB>518</SUB>> ]
+"30064778242" [label = <(&lt;operator&gt;.assignment,scaleX = widthRatio)<SUB>519</SUB>> ]
+"68719484926" [label = <(IDENTIFIER,scaleX,scaleX = widthRatio)<SUB>519</SUB>> ]
+"68719484927" [label = <(IDENTIFIER,widthRatio,scaleX = widthRatio)<SUB>519</SUB>> ]
+"30064778243" [label = <(&lt;operator&gt;.assignment,$stack94 = (float) targetHeight)<SUB>520</SUB>> ]
+"68719484928" [label = <(IDENTIFIER,$stack94,$stack94 = (float) targetHeight)<SUB>520</SUB>> ]
+"30064778244" [label = <(&lt;operator&gt;.cast,(float) targetHeight)<SUB>520</SUB>> ]
+"180388626589" [label = <(TYPE_REF,float,float)<SUB>520</SUB>> ]
+"68719484929" [label = <(IDENTIFIER,targetHeight,(float) targetHeight)<SUB>520</SUB>> ]
+"30064778245" [label = <(&lt;operator&gt;.assignment,$stack93 = (float) drawHeight)<SUB>520</SUB>> ]
+"68719484930" [label = <(IDENTIFIER,$stack93,$stack93 = (float) drawHeight)<SUB>520</SUB>> ]
+"30064778246" [label = <(&lt;operator&gt;.cast,(float) drawHeight)<SUB>520</SUB>> ]
+"180388626590" [label = <(TYPE_REF,float,float)<SUB>520</SUB>> ]
+"68719484931" [label = <(IDENTIFIER,drawHeight,(float) drawHeight)<SUB>520</SUB>> ]
+"30064778247" [label = <(&lt;operator&gt;.assignment,scaleY = $stack94 / $stack93)<SUB>520</SUB>> ]
+"68719484932" [label = <(IDENTIFIER,scaleY,scaleY = $stack94 / $stack93)<SUB>520</SUB>> ]
+"30064778248" [label = <(&lt;operator&gt;.division,$stack94 / $stack93)<SUB>520</SUB>> ]
+"68719484933" [label = <(IDENTIFIER,$stack94,$stack94 / $stack93)<SUB>520</SUB>> ]
+"68719484934" [label = <(IDENTIFIER,$stack93,$stack94 / $stack93)<SUB>520</SUB>> ]
+"184683593911" [label = <(UNKNOWN,goto 528,goto 528)<SUB>521</SUB>> ]
+"30064777632" [label = <(&lt;operator&gt;.assignment,$stack78 = (float) inWidth)<SUB>522</SUB>> ]
+"68719484935" [label = <(IDENTIFIER,$stack78,$stack78 = (float) inWidth)<SUB>522</SUB>> ]
+"30064778249" [label = <(&lt;operator&gt;.cast,(float) inWidth)<SUB>522</SUB>> ]
+"180388626591" [label = <(TYPE_REF,float,float)<SUB>522</SUB>> ]
+"68719484936" [label = <(IDENTIFIER,inWidth,(float) inWidth)<SUB>522</SUB>> ]
+"30064778250" [label = <(&lt;operator&gt;.assignment,$stack77 = widthRatio / heightRatio)<SUB>522</SUB>> ]
+"68719484937" [label = <(IDENTIFIER,$stack77,$stack77 = widthRatio / heightRatio)<SUB>522</SUB>> ]
+"30064778251" [label = <(&lt;operator&gt;.division,widthRatio / heightRatio)<SUB>522</SUB>> ]
+"68719484938" [label = <(IDENTIFIER,widthRatio,widthRatio / heightRatio)<SUB>522</SUB>> ]
+"68719484939" [label = <(IDENTIFIER,heightRatio,widthRatio / heightRatio)<SUB>522</SUB>> ]
+"30064778252" [label = <(&lt;operator&gt;.assignment,$stack79 = $stack78 * $stack77)<SUB>522</SUB>> ]
+"68719484940" [label = <(IDENTIFIER,$stack79,$stack79 = $stack78 * $stack77)<SUB>522</SUB>> ]
+"30064778253" [label = <(&lt;operator&gt;.multiplication,$stack78 * $stack77)<SUB>522</SUB>> ]
+"68719484941" [label = <(IDENTIFIER,$stack78,$stack78 * $stack77)<SUB>522</SUB>> ]
+"68719484942" [label = <(IDENTIFIER,$stack77,$stack78 * $stack77)<SUB>522</SUB>> ]
+"30064778254" [label = <(&lt;operator&gt;.assignment,$stack80 = (double) $stack79)<SUB>522</SUB>> ]
+"68719484943" [label = <(IDENTIFIER,$stack80,$stack80 = (double) $stack79)<SUB>522</SUB>> ]
+"30064778255" [label = <(&lt;operator&gt;.cast,(double) $stack79)<SUB>522</SUB>> ]
+"180388626592" [label = <(TYPE_REF,double,double)<SUB>522</SUB>> ]
+"68719484944" [label = <(IDENTIFIER,$stack79,(double) $stack79)<SUB>522</SUB>> ]
+"30064778256" [label = <(&lt;operator&gt;.assignment,$stack81 = ceil($stack80))<SUB>522</SUB>> ]
+"68719484945" [label = <(IDENTIFIER,$stack81,$stack81 = ceil($stack80))<SUB>522</SUB>> ]
+"30064778257" [label = <(ceil,ceil($stack80))<SUB>522</SUB>> ]
+"68719484946" [label = <(IDENTIFIER,$stack80,ceil($stack80))<SUB>522</SUB>> ]
+"30064778258" [label = <(&lt;operator&gt;.assignment,newSize = (int) $stack81)<SUB>522</SUB>> ]
+"68719484947" [label = <(IDENTIFIER,newSize,newSize = (int) $stack81)<SUB>522</SUB>> ]
+"30064778259" [label = <(&lt;operator&gt;.cast,(int) $stack81)<SUB>522</SUB>> ]
+"180388626593" [label = <(TYPE_REF,int,int)<SUB>522</SUB>> ]
+"68719484948" [label = <(IDENTIFIER,$stack81,(int) $stack81)<SUB>522</SUB>> ]
+"30064778260" [label = <(&lt;operator&gt;.assignment,$stack82 = inWidth - newSize)<SUB>523</SUB>> ]
+"68719484949" [label = <(IDENTIFIER,$stack82,$stack82 = inWidth - newSize)<SUB>523</SUB>> ]
+"30064778261" [label = <(&lt;operator&gt;.subtraction,inWidth - newSize)<SUB>523</SUB>> ]
+"68719484950" [label = <(IDENTIFIER,inWidth,inWidth - newSize)<SUB>523</SUB>> ]
+"68719484951" [label = <(IDENTIFIER,newSize,inWidth - newSize)<SUB>523</SUB>> ]
+"30064778262" [label = <(&lt;operator&gt;.assignment,drawX = $stack82 / 2)<SUB>523</SUB>> ]
+"68719484952" [label = <(IDENTIFIER,drawX,drawX = $stack82 / 2)<SUB>523</SUB>> ]
+"30064778263" [label = <(&lt;operator&gt;.division,$stack82 / 2)<SUB>523</SUB>> ]
+"68719484953" [label = <(IDENTIFIER,$stack82,$stack82 / 2)<SUB>523</SUB>> ]
+"90194314511" [label = <(LITERAL,2,$stack82 / 2)> ]
+"30064778264" [label = <(&lt;operator&gt;.assignment,drawWidth = newSize)<SUB>524</SUB>> ]
+"68719484954" [label = <(IDENTIFIER,drawWidth,drawWidth = newSize)<SUB>524</SUB>> ]
+"68719484955" [label = <(IDENTIFIER,newSize,drawWidth = newSize)<SUB>524</SUB>> ]
+"30064778265" [label = <(&lt;operator&gt;.assignment,$stack84 = (float) targetWidth)<SUB>525</SUB>> ]
+"68719484956" [label = <(IDENTIFIER,$stack84,$stack84 = (float) targetWidth)<SUB>525</SUB>> ]
+"30064778266" [label = <(&lt;operator&gt;.cast,(float) targetWidth)<SUB>525</SUB>> ]
+"180388626594" [label = <(TYPE_REF,float,float)<SUB>525</SUB>> ]
+"68719484957" [label = <(IDENTIFIER,targetWidth,(float) targetWidth)<SUB>525</SUB>> ]
+"30064778267" [label = <(&lt;operator&gt;.assignment,$stack83 = (float) drawWidth)<SUB>525</SUB>> ]
+"68719484958" [label = <(IDENTIFIER,$stack83,$stack83 = (float) drawWidth)<SUB>525</SUB>> ]
+"30064778268" [label = <(&lt;operator&gt;.cast,(float) drawWidth)<SUB>525</SUB>> ]
+"180388626595" [label = <(TYPE_REF,float,float)<SUB>525</SUB>> ]
+"68719484959" [label = <(IDENTIFIER,drawWidth,(float) drawWidth)<SUB>525</SUB>> ]
+"30064778269" [label = <(&lt;operator&gt;.assignment,scaleX = $stack84 / $stack83)<SUB>525</SUB>> ]
+"68719484960" [label = <(IDENTIFIER,scaleX,scaleX = $stack84 / $stack83)<SUB>525</SUB>> ]
+"30064778270" [label = <(&lt;operator&gt;.division,$stack84 / $stack83)<SUB>525</SUB>> ]
+"68719484961" [label = <(IDENTIFIER,$stack84,$stack84 / $stack83)<SUB>525</SUB>> ]
+"68719484962" [label = <(IDENTIFIER,$stack83,$stack84 / $stack83)<SUB>525</SUB>> ]
+"30064778271" [label = <(&lt;operator&gt;.assignment,scaleY = heightRatio)<SUB>526</SUB>> ]
+"68719484963" [label = <(IDENTIFIER,scaleY,scaleY = heightRatio)<SUB>526</SUB>> ]
+"68719484964" [label = <(IDENTIFIER,heightRatio,scaleY = heightRatio)<SUB>526</SUB>> ]
+"30064777658" [label = <(&lt;operator&gt;.assignment,$stack85 = shouldResize(onlyScaleDown, inWidth,...)<SUB>528</SUB>> ]
+"68719484965" [label = <(IDENTIFIER,$stack85,$stack85 = shouldResize(onlyScaleDown, inWidth,...)<SUB>528</SUB>> ]
+"30064778272" [label = <(shouldResize,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>528</SUB>> ]
+"68719484966" [label = <(IDENTIFIER,onlyScaleDown,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>528</SUB>> ]
+"68719484967" [label = <(IDENTIFIER,inWidth,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>528</SUB>> ]
+"68719484968" [label = <(IDENTIFIER,inHeight,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>528</SUB>> ]
+"68719484969" [label = <(IDENTIFIER,targetWidth,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>528</SUB>> ]
+"68719484970" [label = <(IDENTIFIER,targetHeight,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>528</SUB>> ]
+"30064777656" [label = <(&lt;operator&gt;.equals,$stack85 == 0)<SUB>528</SUB>> ]
+"68719484971" [label = <(IDENTIFIER,$stack85,$stack85 == 0)<SUB>528</SUB>> ]
+"90194314512" [label = <(LITERAL,0,$stack85 == 0)> ]
+"30064778273" [label = <(preScale,matrix.preScale(scaleX, scaleY))<SUB>529</SUB>> ]
+"68719484972" [label = <(IDENTIFIER,matrix,matrix.preScale(scaleX, scaleY))<SUB>529</SUB>> ]
+"68719484973" [label = <(IDENTIFIER,scaleX,matrix.preScale(scaleX, scaleY))<SUB>529</SUB>> ]
+"68719484974" [label = <(IDENTIFIER,scaleY,matrix.preScale(scaleX, scaleY))<SUB>529</SUB>> ]
+"184683593905" [label = <(UNKNOWN,goto 553,goto 553)<SUB>531</SUB>> ]
+"30064777645" [label = <(&lt;operator&gt;.assignment,$stack36 = data.centerInside)<SUB>511</SUB>> ]
+"68719484975" [label = <(IDENTIFIER,$stack36,$stack36 = data.centerInside)<SUB>511</SUB>> ]
+"30064778274" [label = <(&lt;operator&gt;.fieldAccess,data.centerInside)<SUB>511</SUB>> ]
+"68719484976" [label = <(IDENTIFIER,data,$stack36 = data.centerInside)<SUB>511</SUB>> ]
+"55834576141" [label = <(FIELD_IDENTIFIER,centerInside,centerInside)<SUB>511</SUB>> ]
+"30064777637" [label = <(&lt;operator&gt;.equals,$stack36 == 0)<SUB>511</SUB>> ]
+"68719484977" [label = <(IDENTIFIER,$stack36,$stack36 == 0)<SUB>511</SUB>> ]
+"90194314513" [label = <(LITERAL,0,$stack36 == 0)> ]
+"30064778275" [label = <(&lt;operator&gt;.assignment,$stack60 = (float) targetWidth)<SUB>532</SUB>> ]
+"68719484978" [label = <(IDENTIFIER,$stack60,$stack60 = (float) targetWidth)<SUB>532</SUB>> ]
+"30064778276" [label = <(&lt;operator&gt;.cast,(float) targetWidth)<SUB>532</SUB>> ]
+"180388626596" [label = <(TYPE_REF,float,float)<SUB>532</SUB>> ]
+"68719484979" [label = <(IDENTIFIER,targetWidth,(float) targetWidth)<SUB>532</SUB>> ]
+"30064778277" [label = <(&lt;operator&gt;.assignment,$stack59 = (float) inWidth)<SUB>532</SUB>> ]
+"68719484980" [label = <(IDENTIFIER,$stack59,$stack59 = (float) inWidth)<SUB>532</SUB>> ]
+"30064778278" [label = <(&lt;operator&gt;.cast,(float) inWidth)<SUB>532</SUB>> ]
+"180388626597" [label = <(TYPE_REF,float,float)<SUB>532</SUB>> ]
+"68719484981" [label = <(IDENTIFIER,inWidth,(float) inWidth)<SUB>532</SUB>> ]
+"30064778279" [label = <(&lt;operator&gt;.assignment,widthRatio = $stack60 / $stack59)<SUB>532</SUB>> ]
+"68719484982" [label = <(IDENTIFIER,widthRatio,widthRatio = $stack60 / $stack59)<SUB>532</SUB>> ]
+"30064778280" [label = <(&lt;operator&gt;.division,$stack60 / $stack59)<SUB>532</SUB>> ]
+"68719484983" [label = <(IDENTIFIER,$stack60,$stack60 / $stack59)<SUB>532</SUB>> ]
+"68719484984" [label = <(IDENTIFIER,$stack59,$stack60 / $stack59)<SUB>532</SUB>> ]
+"30064778281" [label = <(&lt;operator&gt;.assignment,$stack62 = (float) targetHeight)<SUB>533</SUB>> ]
+"68719484985" [label = <(IDENTIFIER,$stack62,$stack62 = (float) targetHeight)<SUB>533</SUB>> ]
+"30064778282" [label = <(&lt;operator&gt;.cast,(float) targetHeight)<SUB>533</SUB>> ]
+"180388626598" [label = <(TYPE_REF,float,float)<SUB>533</SUB>> ]
+"68719484986" [label = <(IDENTIFIER,targetHeight,(float) targetHeight)<SUB>533</SUB>> ]
+"30064778283" [label = <(&lt;operator&gt;.assignment,$stack61 = (float) inHeight)<SUB>533</SUB>> ]
+"68719484987" [label = <(IDENTIFIER,$stack61,$stack61 = (float) inHeight)<SUB>533</SUB>> ]
+"30064778284" [label = <(&lt;operator&gt;.cast,(float) inHeight)<SUB>533</SUB>> ]
+"180388626599" [label = <(TYPE_REF,float,float)<SUB>533</SUB>> ]
+"68719484988" [label = <(IDENTIFIER,inHeight,(float) inHeight)<SUB>533</SUB>> ]
+"30064778285" [label = <(&lt;operator&gt;.assignment,heightRatio = $stack62 / $stack61)<SUB>533</SUB>> ]
+"68719484989" [label = <(IDENTIFIER,heightRatio,heightRatio = $stack62 / $stack61)<SUB>533</SUB>> ]
+"30064778286" [label = <(&lt;operator&gt;.division,$stack62 / $stack61)<SUB>533</SUB>> ]
+"68719484990" [label = <(IDENTIFIER,$stack62,$stack62 / $stack61)<SUB>533</SUB>> ]
+"68719484991" [label = <(IDENTIFIER,$stack61,$stack62 / $stack61)<SUB>533</SUB>> ]
+"30064778287" [label = <(&lt;operator&gt;.assignment,$stack63 = widthRatio cmpg heightRatio)<SUB>534</SUB>> ]
+"68719484992" [label = <(IDENTIFIER,$stack63,$stack63 = widthRatio cmpg heightRatio)<SUB>534</SUB>> ]
+"30064778288" [label = <(&lt;operator&gt;.compare,widthRatio cmpg heightRatio)<SUB>534</SUB>> ]
+"68719484993" [label = <(IDENTIFIER,widthRatio,widthRatio cmpg heightRatio)<SUB>534</SUB>> ]
+"68719484994" [label = <(IDENTIFIER,heightRatio,widthRatio cmpg heightRatio)<SUB>534</SUB>> ]
+"30064778289" [label = <(&lt;operator&gt;.assignment,$i1 = (int) $stack63)> ]
+"68719484995" [label = <(IDENTIFIER,$i1,$i1 = (int) $stack63)> ]
+"30064778290" [label = <(&lt;operator&gt;.cast,(int) $stack63)> ]
+"180388626600" [label = <(TYPE_REF,int,int)> ]
+"68719484996" [label = <(IDENTIFIER,$stack63,(int) $stack63)> ]
+"30064777639" [label = <(&lt;operator&gt;.greaterEqualsThan,$i1 &gt;= 0)<SUB>534</SUB>> ]
+"68719484997" [label = <(IDENTIFIER,$i1,$i1 &gt;= 0)<SUB>534</SUB>> ]
+"90194314514" [label = <(LITERAL,0,$i1 &gt;= 0)> ]
+"30064778291" [label = <(&lt;operator&gt;.assignment,$stack66 = widthRatio)<SUB>534</SUB>> ]
+"68719484998" [label = <(IDENTIFIER,$stack66,$stack66 = widthRatio)<SUB>534</SUB>> ]
+"68719484999" [label = <(IDENTIFIER,widthRatio,$stack66 = widthRatio)<SUB>534</SUB>> ]
+"184683593909" [label = <(UNKNOWN,goto 534,goto 534)<SUB>534</SUB>> ]
+"30064777640" [label = <(&lt;operator&gt;.assignment,$stack66 = heightRatio)<SUB>534</SUB>> ]
+"68719485000" [label = <(IDENTIFIER,$stack66,$stack66 = heightRatio)<SUB>534</SUB>> ]
+"68719485001" [label = <(IDENTIFIER,heightRatio,$stack66 = heightRatio)<SUB>534</SUB>> ]
+"30064777652" [label = <(&lt;operator&gt;.assignment,scaleX = $stack66)<SUB>534</SUB>> ]
+"68719485002" [label = <(IDENTIFIER,scaleX,scaleX = $stack66)<SUB>534</SUB>> ]
+"68719485003" [label = <(IDENTIFIER,$stack66,scaleX = $stack66)<SUB>534</SUB>> ]
+"30064778292" [label = <(&lt;operator&gt;.assignment,$stack64 = shouldResize(onlyScaleDown, inWidth,...)<SUB>535</SUB>> ]
+"68719485004" [label = <(IDENTIFIER,$stack64,$stack64 = shouldResize(onlyScaleDown, inWidth,...)<SUB>535</SUB>> ]
+"30064778293" [label = <(shouldResize,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>535</SUB>> ]
+"68719485005" [label = <(IDENTIFIER,onlyScaleDown,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>535</SUB>> ]
+"68719485006" [label = <(IDENTIFIER,inWidth,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>535</SUB>> ]
+"68719485007" [label = <(IDENTIFIER,inHeight,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>535</SUB>> ]
+"68719485008" [label = <(IDENTIFIER,targetWidth,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>535</SUB>> ]
+"68719485009" [label = <(IDENTIFIER,targetHeight,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>535</SUB>> ]
+"30064777651" [label = <(&lt;operator&gt;.equals,$stack64 == 0)<SUB>535</SUB>> ]
+"68719485010" [label = <(IDENTIFIER,$stack64,$stack64 == 0)<SUB>535</SUB>> ]
+"90194314515" [label = <(LITERAL,0,$stack64 == 0)> ]
+"30064778294" [label = <(preScale,matrix.preScale(scaleX, scaleX))<SUB>536</SUB>> ]
+"68719485011" [label = <(IDENTIFIER,matrix,matrix.preScale(scaleX, scaleX))<SUB>536</SUB>> ]
+"68719485012" [label = <(IDENTIFIER,scaleX,matrix.preScale(scaleX, scaleX))<SUB>536</SUB>> ]
+"68719485013" [label = <(IDENTIFIER,scaleX,matrix.preScale(scaleX, scaleX))<SUB>536</SUB>> ]
+"184683593906" [label = <(UNKNOWN,goto 553,goto 553)<SUB>538</SUB>> ]
+"30064777638" [label = <(&lt;operator&gt;.notEquals,targetWidth != 0)<SUB>511</SUB>> ]
+"68719485014" [label = <(IDENTIFIER,targetWidth,targetWidth != 0)<SUB>511</SUB>> ]
+"90194314516" [label = <(LITERAL,0,targetWidth != 0)> ]
+"30064777659" [label = <(&lt;operator&gt;.equals,targetHeight == 0)<SUB>511</SUB>> ]
+"68719485015" [label = <(IDENTIFIER,targetHeight,targetHeight == 0)<SUB>511</SUB>> ]
+"90194314517" [label = <(LITERAL,0,targetHeight == 0)> ]
+"30064777642" [label = <(&lt;operator&gt;.notEquals,targetWidth != inWidth)<SUB>511</SUB>> ]
+"68719485016" [label = <(IDENTIFIER,targetWidth,targetWidth != inWidth)<SUB>511</SUB>> ]
+"68719485017" [label = <(IDENTIFIER,inWidth,targetWidth != inWidth)<SUB>511</SUB>> ]
+"30064777647" [label = <(&lt;operator&gt;.equals,targetHeight == inHeight)<SUB>511</SUB>> ]
+"68719485018" [label = <(IDENTIFIER,targetHeight,targetHeight == inHeight)<SUB>511</SUB>> ]
+"68719485019" [label = <(IDENTIFIER,inHeight,targetHeight == inHeight)<SUB>511</SUB>> ]
+"30064777635" [label = <(&lt;operator&gt;.equals,targetWidth == 0)<SUB>543</SUB>> ]
+"68719485020" [label = <(IDENTIFIER,targetWidth,targetWidth == 0)<SUB>543</SUB>> ]
+"90194314518" [label = <(LITERAL,0,targetWidth == 0)> ]
+"30064778295" [label = <(&lt;operator&gt;.assignment,$stack53 = (float) targetWidth)<SUB>543</SUB>> ]
+"68719485021" [label = <(IDENTIFIER,$stack53,$stack53 = (float) targetWidth)<SUB>543</SUB>> ]
+"30064778296" [label = <(&lt;operator&gt;.cast,(float) targetWidth)<SUB>543</SUB>> ]
+"180388626601" [label = <(TYPE_REF,float,float)<SUB>543</SUB>> ]
+"68719485022" [label = <(IDENTIFIER,targetWidth,(float) targetWidth)<SUB>543</SUB>> ]
+"30064778297" [label = <(&lt;operator&gt;.assignment,$stack52 = (float) inWidth)<SUB>543</SUB>> ]
+"68719485023" [label = <(IDENTIFIER,$stack52,$stack52 = (float) inWidth)<SUB>543</SUB>> ]
+"30064778298" [label = <(&lt;operator&gt;.cast,(float) inWidth)<SUB>543</SUB>> ]
+"180388626602" [label = <(TYPE_REF,float,float)<SUB>543</SUB>> ]
+"68719485024" [label = <(IDENTIFIER,inWidth,(float) inWidth)<SUB>543</SUB>> ]
+"30064778299" [label = <(&lt;operator&gt;.assignment,$stack54 = $stack53 / $stack52)<SUB>543</SUB>> ]
+"68719485025" [label = <(IDENTIFIER,$stack54,$stack54 = $stack53 / $stack52)<SUB>543</SUB>> ]
+"30064778300" [label = <(&lt;operator&gt;.division,$stack53 / $stack52)<SUB>543</SUB>> ]
+"68719485026" [label = <(IDENTIFIER,$stack53,$stack53 / $stack52)<SUB>543</SUB>> ]
+"68719485027" [label = <(IDENTIFIER,$stack52,$stack53 / $stack52)<SUB>543</SUB>> ]
+"184683593907" [label = <(UNKNOWN,goto 543,goto 543)<SUB>543</SUB>> ]
+"30064777636" [label = <(&lt;operator&gt;.assignment,$stack38 = (float) targetHeight)<SUB>543</SUB>> ]
+"68719485028" [label = <(IDENTIFIER,$stack38,$stack38 = (float) targetHeight)<SUB>543</SUB>> ]
+"30064778301" [label = <(&lt;operator&gt;.cast,(float) targetHeight)<SUB>543</SUB>> ]
+"180388626603" [label = <(TYPE_REF,float,float)<SUB>543</SUB>> ]
+"68719485029" [label = <(IDENTIFIER,targetHeight,(float) targetHeight)<SUB>543</SUB>> ]
+"30064778302" [label = <(&lt;operator&gt;.assignment,$stack37 = (float) inHeight)<SUB>543</SUB>> ]
+"68719485030" [label = <(IDENTIFIER,$stack37,$stack37 = (float) inHeight)<SUB>543</SUB>> ]
+"30064778303" [label = <(&lt;operator&gt;.cast,(float) inHeight)<SUB>543</SUB>> ]
+"180388626604" [label = <(TYPE_REF,float,float)<SUB>543</SUB>> ]
+"68719485031" [label = <(IDENTIFIER,inHeight,(float) inHeight)<SUB>543</SUB>> ]
+"30064778304" [label = <(&lt;operator&gt;.assignment,$stack54 = $stack38 / $stack37)<SUB>543</SUB>> ]
+"68719485032" [label = <(IDENTIFIER,$stack54,$stack54 = $stack38 / $stack37)<SUB>543</SUB>> ]
+"30064778305" [label = <(&lt;operator&gt;.division,$stack38 / $stack37)<SUB>543</SUB>> ]
+"68719485033" [label = <(IDENTIFIER,$stack38,$stack38 / $stack37)<SUB>543</SUB>> ]
+"68719485034" [label = <(IDENTIFIER,$stack37,$stack38 / $stack37)<SUB>543</SUB>> ]
+"30064777641" [label = <(&lt;operator&gt;.assignment,widthRatio = $stack54)<SUB>543</SUB>> ]
+"68719485035" [label = <(IDENTIFIER,widthRatio,widthRatio = $stack54)<SUB>543</SUB>> ]
+"68719485036" [label = <(IDENTIFIER,$stack54,widthRatio = $stack54)<SUB>543</SUB>> ]
+"30064777633" [label = <(&lt;operator&gt;.equals,targetHeight == 0)<SUB>545</SUB>> ]
+"68719485037" [label = <(IDENTIFIER,targetHeight,targetHeight == 0)<SUB>545</SUB>> ]
+"90194314519" [label = <(LITERAL,0,targetHeight == 0)> ]
+"30064778306" [label = <(&lt;operator&gt;.assignment,$stack45 = (float) targetHeight)<SUB>545</SUB>> ]
+"68719485038" [label = <(IDENTIFIER,$stack45,$stack45 = (float) targetHeight)<SUB>545</SUB>> ]
+"30064778307" [label = <(&lt;operator&gt;.cast,(float) targetHeight)<SUB>545</SUB>> ]
+"180388626605" [label = <(TYPE_REF,float,float)<SUB>545</SUB>> ]
+"68719485039" [label = <(IDENTIFIER,targetHeight,(float) targetHeight)<SUB>545</SUB>> ]
+"30064778308" [label = <(&lt;operator&gt;.assignment,$stack44 = (float) inHeight)<SUB>545</SUB>> ]
+"68719485040" [label = <(IDENTIFIER,$stack44,$stack44 = (float) inHeight)<SUB>545</SUB>> ]
+"30064778309" [label = <(&lt;operator&gt;.cast,(float) inHeight)<SUB>545</SUB>> ]
+"180388626606" [label = <(TYPE_REF,float,float)<SUB>545</SUB>> ]
+"68719485041" [label = <(IDENTIFIER,inHeight,(float) inHeight)<SUB>545</SUB>> ]
+"30064778310" [label = <(&lt;operator&gt;.assignment,$stack46 = $stack45 / $stack44)<SUB>545</SUB>> ]
+"68719485042" [label = <(IDENTIFIER,$stack46,$stack46 = $stack45 / $stack44)<SUB>545</SUB>> ]
+"30064778311" [label = <(&lt;operator&gt;.division,$stack45 / $stack44)<SUB>545</SUB>> ]
+"68719485043" [label = <(IDENTIFIER,$stack45,$stack45 / $stack44)<SUB>545</SUB>> ]
+"68719485044" [label = <(IDENTIFIER,$stack44,$stack45 / $stack44)<SUB>545</SUB>> ]
+"184683593910" [label = <(UNKNOWN,goto 545,goto 545)<SUB>545</SUB>> ]
+"30064777634" [label = <(&lt;operator&gt;.assignment,$stack40 = (float) targetWidth)<SUB>545</SUB>> ]
+"68719485045" [label = <(IDENTIFIER,$stack40,$stack40 = (float) targetWidth)<SUB>545</SUB>> ]
+"30064778312" [label = <(&lt;operator&gt;.cast,(float) targetWidth)<SUB>545</SUB>> ]
+"180388626607" [label = <(TYPE_REF,float,float)<SUB>545</SUB>> ]
+"68719485046" [label = <(IDENTIFIER,targetWidth,(float) targetWidth)<SUB>545</SUB>> ]
+"30064778313" [label = <(&lt;operator&gt;.assignment,$stack39 = (float) inWidth)<SUB>545</SUB>> ]
+"68719485047" [label = <(IDENTIFIER,$stack39,$stack39 = (float) inWidth)<SUB>545</SUB>> ]
+"30064778314" [label = <(&lt;operator&gt;.cast,(float) inWidth)<SUB>545</SUB>> ]
+"180388626608" [label = <(TYPE_REF,float,float)<SUB>545</SUB>> ]
+"68719485048" [label = <(IDENTIFIER,inWidth,(float) inWidth)<SUB>545</SUB>> ]
+"30064778315" [label = <(&lt;operator&gt;.assignment,$stack46 = $stack40 / $stack39)<SUB>545</SUB>> ]
+"68719485049" [label = <(IDENTIFIER,$stack46,$stack46 = $stack40 / $stack39)<SUB>545</SUB>> ]
+"30064778316" [label = <(&lt;operator&gt;.division,$stack40 / $stack39)<SUB>545</SUB>> ]
+"68719485050" [label = <(IDENTIFIER,$stack40,$stack40 / $stack39)<SUB>545</SUB>> ]
+"68719485051" [label = <(IDENTIFIER,$stack39,$stack40 / $stack39)<SUB>545</SUB>> ]
+"30064777657" [label = <(&lt;operator&gt;.assignment,heightRatio = $stack46)<SUB>545</SUB>> ]
+"68719485052" [label = <(IDENTIFIER,heightRatio,heightRatio = $stack46)<SUB>545</SUB>> ]
+"68719485053" [label = <(IDENTIFIER,$stack46,heightRatio = $stack46)<SUB>545</SUB>> ]
+"30064778317" [label = <(&lt;operator&gt;.assignment,$stack41 = shouldResize(onlyScaleDown, inWidth,...)<SUB>547</SUB>> ]
+"68719485054" [label = <(IDENTIFIER,$stack41,$stack41 = shouldResize(onlyScaleDown, inWidth,...)<SUB>547</SUB>> ]
+"30064778318" [label = <(shouldResize,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>547</SUB>> ]
+"68719485055" [label = <(IDENTIFIER,onlyScaleDown,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>547</SUB>> ]
+"68719485056" [label = <(IDENTIFIER,inWidth,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>547</SUB>> ]
+"68719485057" [label = <(IDENTIFIER,inHeight,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>547</SUB>> ]
+"68719485058" [label = <(IDENTIFIER,targetWidth,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>547</SUB>> ]
+"68719485059" [label = <(IDENTIFIER,targetHeight,shouldResize(onlyScaleDown, inWidth, inHeight, ...)<SUB>547</SUB>> ]
+"30064777650" [label = <(&lt;operator&gt;.equals,$stack41 == 0)<SUB>547</SUB>> ]
+"68719485060" [label = <(IDENTIFIER,$stack41,$stack41 == 0)<SUB>547</SUB>> ]
+"90194314520" [label = <(LITERAL,0,$stack41 == 0)> ]
+"30064778319" [label = <(preScale,matrix.preScale(widthRatio, heightRatio))<SUB>548</SUB>> ]
+"68719485061" [label = <(IDENTIFIER,matrix,matrix.preScale(widthRatio, heightRatio))<SUB>548</SUB>> ]
+"68719485062" [label = <(IDENTIFIER,widthRatio,matrix.preScale(widthRatio, heightRatio))<SUB>548</SUB>> ]
+"68719485063" [label = <(IDENTIFIER,heightRatio,matrix.preScale(widthRatio, heightRatio))<SUB>548</SUB>> ]
+"30064777630" [label = <(&lt;operator&gt;.equals,exifRotation == 0)<SUB>553</SUB>> ]
+"68719485064" [label = <(IDENTIFIER,exifRotation,exifRotation == 0)<SUB>553</SUB>> ]
+"90194314521" [label = <(LITERAL,0,exifRotation == 0)> ]
+"30064778320" [label = <(&lt;operator&gt;.assignment,$stack22 = (float) exifRotation)<SUB>554</SUB>> ]
+"68719485065" [label = <(IDENTIFIER,$stack22,$stack22 = (float) exifRotation)<SUB>554</SUB>> ]
+"30064778321" [label = <(&lt;operator&gt;.cast,(float) exifRotation)<SUB>554</SUB>> ]
+"180388626609" [label = <(TYPE_REF,float,float)<SUB>554</SUB>> ]
+"68719485066" [label = <(IDENTIFIER,exifRotation,(float) exifRotation)<SUB>554</SUB>> ]
+"30064778322" [label = <(preRotate,matrix.preRotate($stack22))<SUB>554</SUB>> ]
+"68719485067" [label = <(IDENTIFIER,matrix,matrix.preRotate($stack22))<SUB>554</SUB>> ]
+"68719485068" [label = <(IDENTIFIER,$stack22,matrix.preRotate($stack22))<SUB>554</SUB>> ]
+"30064777653" [label = <(&lt;operator&gt;.assignment,targetWidth#27 = createBitmap(result, drawX, dr...)<SUB>558</SUB>> ]
+"68719485069" [label = <(IDENTIFIER,targetWidth#27,targetWidth#27 = createBitmap(result, drawX, dr...)<SUB>558</SUB>> ]
+"30064778323" [label = <(createBitmap,createBitmap(result, drawX, drawY, drawWidth, d...)<SUB>558</SUB>> ]
+"68719485070" [label = <(IDENTIFIER,result,createBitmap(result, drawX, drawY, drawWidth, d...)<SUB>558</SUB>> ]
+"68719485071" [label = <(IDENTIFIER,drawX,createBitmap(result, drawX, drawY, drawWidth, d...)<SUB>558</SUB>> ]
+"68719485072" [label = <(IDENTIFIER,drawY,createBitmap(result, drawX, drawY, drawWidth, d...)<SUB>558</SUB>> ]
+"68719485073" [label = <(IDENTIFIER,drawWidth,createBitmap(result, drawX, drawY, drawWidth, d...)<SUB>558</SUB>> ]
+"68719485074" [label = <(IDENTIFIER,drawHeight,createBitmap(result, drawX, drawY, drawWidth, d...)<SUB>558</SUB>> ]
+"68719485075" [label = <(IDENTIFIER,matrix,createBitmap(result, drawX, drawY, drawWidth, d...)<SUB>558</SUB>> ]
+"90194314522" [label = <(LITERAL,1,createBitmap(result, drawX, drawY, drawWidth, d...)> ]
+"30064777643" [label = <(&lt;operator&gt;.equals,targetWidth#27 == result)<SUB>559</SUB>> ]
+"68719485076" [label = <(IDENTIFIER,targetWidth#27,targetWidth#27 == result)<SUB>559</SUB>> ]
+"68719485077" [label = <(IDENTIFIER,result,targetWidth#27 == result)<SUB>559</SUB>> ]
+"30064778324" [label = <(recycle,result.recycle())<SUB>560</SUB>> ]
+"68719485078" [label = <(IDENTIFIER,result,result.recycle())<SUB>560</SUB>> ]
+"30064778325" [label = <(&lt;operator&gt;.assignment,result = targetWidth#27)<SUB>561</SUB>> ]
+"68719485079" [label = <(IDENTIFIER,result,result = targetWidth#27)<SUB>561</SUB>> ]
+"68719485080" [label = <(IDENTIFIER,targetWidth#27,result = targetWidth#27)<SUB>561</SUB>> ]
+"146028888571" [label = <(RETURN,return result;,return result;)<SUB>564</SUB>> ]
+"68719485081" [label = <(IDENTIFIER,result,return result;)<SUB>564</SUB>> ]
+"133143986910" [label = <(MODIFIER,STATIC)> ]
+"128849019366" [label = <(METHOD_RETURN,android.graphics.Bitmap)<SUB>486</SUB>> ]
   "111669150182" -> "115964117953" 
   "111669150182" -> "115964117954" 
   "111669150182" -> "115964117955" 
