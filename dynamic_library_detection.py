@@ -6,7 +6,7 @@ from models.gcn import GCN
 from utils import library_ast_data as ast
 from utils import jar_processing as jar
 
-def detect_library_in_apk(apk_ast_data, model, batch_size=64, num_classes=16, threshold=0.9):
+def detect_library_in_apk(apk_ast_data, model, batch_size=64, num_classes=16, threshold=0.8):
     """model = GCN(hidden_channels=16)
     model.load_state_dict(torch.load(f'libraries/{library_name}/{library_name}_gnn_weights.pt'))
     model.eval()"""
@@ -29,6 +29,28 @@ def detect_library_in_apk(apk_ast_data, model, batch_size=64, num_classes=16, th
                     library_vector[pred.item()] += 1  
     
     return library_vector
+
+def collect_file_sizes(base_directory='libraries'):
+    file_sizes_dict = {}
+    
+    for root, _, files in os.walk(base_directory):
+        for file in files:
+            if file == "sizes.txt":
+                parent_dir = os.path.basename(root)
+                file_path = os.path.join(root, file)
+                try:
+                    with open(file_path, 'r') as f:
+                        lines = f.readlines()[:-2]
+                        sizes = []
+                        for line in lines:
+                            if line.endswith("bytes\n") or "bytes" in line:
+                                size = int(line.split(":")[1].strip().split()[0])
+                                sizes.append(size // 1024)  # Convert to KB, rounded down
+                        file_sizes_dict[parent_dir] = sizes
+                except Exception as e:
+                    print(f"Error reading {file_path}: {e}")
+    
+    return file_sizes_dict
 
 def find_min_max_file_size(base_directory='libraries'):
     min_size = None
@@ -70,6 +92,7 @@ def count_files_min_size(directory, min_size):
     
     return count
 
+sizes = collect_file_sizes()
 dir = 'data/dexs'
 joern_workspace = os.path.join(dir, 'workspace')
 all_datasets = {}
@@ -83,7 +106,7 @@ min_size, max_size = find_min_max_file_size()
 for out_dir, apk_name in out_dirs_apk_names:
     print(f"Creating dataset for library '{apk_name}' with data from '{out_dir}'...")
     count = count_files_min_size(out_dir, min_size)
-    method_graphs = ast.create_dataset_from_dot(out_dir, count, apk_name, eval=True)
+    method_graphs = ast.create_dataset_from_dot_files(dot_files, labels, apk_name)
     all_datasets[apk_name] = method_graphs
 
 def init_models(directory='libraries'):
