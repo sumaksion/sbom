@@ -1,23 +1,27 @@
 import os
 import torch
-import re
+import json
 import glob
 from collections import OrderedDict
 from torch_geometric.loader import DataLoader
-from models.gcn import GCN
+from models.gcn import ASTNN
+from utils import text_stripper as strip
 from utils import library_ast_data as ast
 from utils import jar_processing as jar
 from utils import find_lib_dots as dots
 from library_gnn_trainer import LibraryGNNTrainer
 
-def get_dot_files_with_labels(directory, file_sizes, tolerance_kb=7):
+def get_dot_files_with_labels(directory, file_sizes: dict, filter: dict, tolerance_kb=7):
 
     dot_files = glob.glob(os.path.join(directory, '*.dot'))
     dot_files = sorted(dot_files, key=os.path.getsize)
-    max_size = max(file_sizes) + 1 
-    min_size = min(file_sizes) - tolerance_kb
+    max_size = max(file_sizes, key=lambda x: x[0])[0] + 1
+    min_size = min(file_sizes, key=lambda x: x[0])[0] - tolerance_kb
     dot_files_out = []
     idxs_and_sizes = []
+    idx = 0
+    label_mapping = {}
+    labels = []
     for file in dot_files[:]:
         size = os.path.getsize(file) // 1024
         if size < min_size:
@@ -33,69 +37,103 @@ def get_dot_files_with_labels(directory, file_sizes, tolerance_kb=7):
         if size <= max_size:
             break
 
-    idx = 0
-    label_mapping = {}
-    labels = []
-    for target_size in file_sizes:
 
-        
+    for size, label in file_sizes:
+        filter_list = filter.get(label, [])
 
         for file in dot_files[:]:
             file_size = os.path.getsize(file) // 1024
-            diff = target_size - file_size 
-            # methods in memory should be smaller than in the jar
+            diff = size - file_size
+
+            # Methods in memory should be smaller than in the jar
             if diff < -1:
-                dot_files.remove(file) # targets are sorted, so won't be useful for future targets
+                dot_files.remove(file)  # Targets are sorted, so this file won't be useful for future targets
                 continue
-            # files are sorted, so this is minimum diff for this target
+            
+            # Minimum diff for this target (files are sorted)
             if diff > tolerance_kb:
                 break
-            else:
+            
+            # Check if the file matches the filter criteria
+            file_beginning = strip.get_ast_first_children(file)
+            if file_beginning == filter_list:
                 dot_files_out.append(file)
-                idxs_and_sizes.append((idx, file_size) )
+                idxs_and_sizes.append((idx, file_size, file_beginning))
                 labels.append(idx)
                 idx += 1
 
+    # Create label mapping
     for obj in idxs_and_sizes:
-        for idx, size in enumerate(file_sizes):
+        for size, label in file_sizes:
             diff = size - obj[1]
             if diff < -1:
                 break
             if diff > tolerance_kb:
                 continue
             else:
-                if obj[0] not in label_mapping:
-                    label_mapping[obj[0]] = []
-                label_mapping[obj[0]].append(idx+1)
+                if obj[2] == filter.get(label, []):
+                    if obj[0] not in label_mapping:
+                        label_mapping[obj[0]] = []
+                    label_mapping[obj[0]].append(label)
 
     return dot_files_out, label_mapping
 
-def detect_library_in_apk(apk_ast_data, model, label_mapping: dict, batch_size=64, num_classes=16, threshold=0.8):
+def detect_library_in_apk(apk_ast_data, model, lib_name, file_mapping, label_mapping=None, batch_size=64, num_classes=16, threshold=0.99):
     library_vector = [0] * num_classes
-    eval_loader = DataLoader(apk_ast_data, batch_size=batch_size, shuffle=False)
+    eval_loader = DataLoader(apk_ast_data.to(device), batch_size=batch_size, shuffle=False)
     
     
     with torch.no_grad():
         for data in eval_loader:
-            out = model(data.x, data.edge_index, data.batch)
+            out = model(data)
             probabilities = torch.softmax(out, dim=1)
             
             for i, prob in enumerate(probabilities):
                 certainty, pred = torch.max(prob, dim=0)
-
-                potential_labels = label_mapping[data.y[i].item()]
-                if pred.item() == 0 or pred.item() in potential_labels:
-                    if certainty > threshold:
-                        library_vector[pred.item()] += 1
-
+                if label_mapping is None:
+                    potential_label = data.y[i].item()
+                    if pred.item() == 0 or pred.item() == potential_label:
+                        if certainty > threshold:
+                            library_vector[pred.item()] += 1
+                else:
+                    potential_labels = label_mapping[data.y[i].item()]
+                    if pred.item() == 0 or pred.item() in potential_labels:
+                        if certainty > threshold:
+                            library_vector[pred.item()] += 1
+    for idx, field in enumerate(library_vector[1:]):
+        if field > 2:
+            library_vector[idx+1] = 0
+            name_list = lib_name.rsplit('-', 1)
+            dot_dir = os.path.join('data', 'jars', 'workspace', name_list[0], name_list[1], 'out')
+            if len(file_mapping.keys()) == 15:
+                smallest_file_name = file_mapping[15]
+            else:
+                print('dataset should be of size 15')
+                return library_vector
+            smallest_file_path = os.path.join(dot_dir, smallest_file_name)
+            dot_files = sorted(glob.glob(os.path.join(dot_dir, "*.dot" )), key=os.path.getsize, reverse=True)
+            index_smallest_file = dot_files.index(smallest_file_path)
+            replacement_file = dot_files[index_smallest_file+1]
+            lib_dir = os.path.join('libraries', lib_name, 'ast_dataset')
+            dataset = ast.CustomASTDataset.load_dataset_from_root(lib_dir)
+            dataset.replace_class(replacement_file, idx+1)
+            # only new class
+            new_data_list = [data.to(device) for data in dataset if data.y.item() == idx + 1]
+            train_loader = DataLoader(new_data_list, batch_size=batch_size, shuffle=True)
+            trainer = LibraryGNNTrainer(
+                library_name=lib_name,
+                loader=train_loader,
+                batch_size=batch_size
+            )   
+            trainer.train_and_evaluate(epochs=100)
     return library_vector
 
 def expand_library_dataset_from_apk(
-    apk_ast_data, model, lib_name, batch_size=64, num_classes=16, threshold=0.8, 
+    apk_ast_data, model, lib_name, batch_size=64, num_classes=16, threshold=0.99, 
     higher_threshold=0.7
 ):
     library_vector = [0] * num_classes
-    eval_loader = DataLoader(apk_ast_data, batch_size=batch_size, shuffle=False)
+    eval_loader = DataLoader(apk_ast_data.to(device), batch_size=batch_size, shuffle=False)
     lib_dataset_path = f'libraries/{lib_name}/ast_dataset'
     label_counts = {}
     training_data = []
@@ -108,7 +146,7 @@ def expand_library_dataset_from_apk(
             for label in data.y.tolist():
                 label_counts[label] = label_counts.get(label, 0) + 1
 
-            out = model(data.x, data.edge_index, data.batch)
+            out = model(data)
             probabilities = torch.softmax(out, dim=1)
 
             for i, prob in enumerate(probabilities):
@@ -133,13 +171,10 @@ def expand_library_dataset_from_apk(
                             "data": data[i],
                             "certainty": certainty
                         }
-                    if certainty > higher_threshold:
+                    if label_probability > higher_threshold:
                         training_data.append(data[i])
                         labels.append(true_label)
                 
-                print(f"Data index {i} true label: {true_label}")
-                print(f"Probability of true label: {label_probability}")
-                print(f"All class probabilities: {prob.tolist()}")
 
             for label, item_info in highest_certainty_items.items():
                 if label not in labels:  
@@ -151,7 +186,7 @@ def expand_library_dataset_from_apk(
     except FileNotFoundError as e:
         print(e)
     training_dataset.add_data(training_data, labels)
-    train_loader = DataLoader(training_dataset, batch_size=batch_size, shuffle=True)  
+    train_loader = DataLoader(training_dataset.to(device), batch_size=batch_size, shuffle=True)  
     
     trainer = LibraryGNNTrainer(
         library_name=lib_name,
@@ -164,30 +199,40 @@ def expand_library_dataset_from_apk(
 
 
 def collect_file_sizes(base_directory='libraries'):
-    file_sizes_dict = {}
-
+    classes_sizes_dict = {}
+    files_classes_dict = {}
     for root, _, files in os.walk(base_directory):
         for file in files:
-            if file == "sizes.txt":
+            if file == "sizes.json":
                 parent_dir = os.path.basename(root)
                 file_path = os.path.join(root, file)
-                try:
-                    with open(file_path, 'r') as f:
-                        lines = f.readlines()[:-2]  
-                        sizes = []
-                        for line in lines:
-                            if "bytes" in line:
-                                size = int(line.split(":")[1].strip().split()[0]) // 1024
-                                sizes.append(size)
-                        
-                        file_sizes_dict[parent_dir] = sizes
+                size_dict = load_dictionary(file_path)
+                sorted_size_dict = {label: size_info for label, size_info in sorted(size_dict.items(), key=lambda item: item[1]['size'], reverse=True)}
+                size_list = [(size_info['size'] // 1024, label) for label, size_info in sorted_size_dict.items()]
+                file_dict = {label: file_info['file'] for label, file_info in sorted_size_dict.items()}
+                #size_list.sort(reverse=True, key=lambda x: x[0])
+                files_classes_dict[parent_dir] = file_dict
+                classes_sizes_dict[parent_dir] = size_list
 
-                except Exception as e:
-                    print(f"Error reading {file_path}: {e}")
-                    
-    return file_sizes_dict
+    return classes_sizes_dict, files_classes_dict
 
+def save_mapping(label_mapping, dataset_root, name):
+    label_mapping_path = os.path.join(dataset_root, name)
+    with open(label_mapping_path, "w") as f:
+        json.dump(label_mapping, f, indent=4)
+    print(f"Label mapping saved to {label_mapping_path}")
 
+def load_dictionary(path):
+
+    if os.path.exists(path):
+        with open(path, "r") as f:
+            dict = {int(k): v for k, v in json.load(f).items()}
+        print(f"Dictionary loaded from {path}")
+        return dict
+    else:
+        print(f"No dictionary found at {path}")
+        return None
+    
 def extract_graph_name(dot_file_path):
 
     with open(dot_file_path, 'r') as file:
@@ -213,7 +258,9 @@ def get_graph_names_and_indexes(directory, num_files=15):
     
     return result
 
-sizes_dict = collect_file_sizes()
+device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+print(f"Using device: {device}")
+sizes_dict, files_dict = collect_file_sizes()
 dir = 'data/dexs'
 joern_workspace = os.path.join(dir, 'workspace')
 
@@ -235,13 +282,13 @@ for out_dir, apk_name in out_dirs_apk_names:
     for lib_name in sizes_dict.keys():
 
         detection_dataset_root = os.path.join('detection', apk_name, lib_name)
-        model = GCN(hidden_channels=16)
-        model.load_state_dict(torch.load(f'libraries/{lib_name}/{lib_name}_gnn_weights.pt'))
+        model = ASTNN().to(device)
+        model.load_state_dict(torch.load(f'libraries/{lib_name}/{lib_name}_gnn_weights.pt', map_location=device))
 
         search_string = lib_name.split("-")[0]
         lib_number = lib_name.split("-")[-1]
-        max_size = max(sizes_dict[lib_name]) + 1
-        min_size = min(sizes_dict[lib_name]) - 6
+        max_size = max(sizes_dict[lib_name], key=lambda x: x[0])[0] + 1
+        min_size = min(sizes_dict[lib_name], key=lambda x: x[0])[0] - 6
         lib_apk_files = dots.find_lib_dot_files(out_dir, search_string, max_size, min_size)
         lib_dot_dir = os.path.join('data', 'jars', 'workspace', search_string, lib_number, 'out')
         name_tuple = (apk_name, lib_name)
@@ -260,9 +307,12 @@ for out_dir, apk_name in out_dirs_apk_names:
                             classed_dot_files.append(dot_file)
                             labels.append(index + 1)
                 method_graphs = ast.create_dataset_from_dot_files(classed_dot_files, name_tuple, labels)
+                lib_vector = expand_library_dataset_from_apk(method_graphs, model, lib_name)
             else:
                 try:
                     method_graphs = ast.CustomASTDataset.load_dataset_from_root(os.path.join(detection_dataset_root, 'ast_dataset'))
+                    file_mapping = files_dict[lib_name]
+                    lib_vector = detect_library_in_apk(method_graphs, model, lib_name, file_mapping)
                 except FileNotFoundError as e:
                     print(e)
                 
@@ -270,27 +320,38 @@ for out_dir, apk_name in out_dirs_apk_names:
                 
             all_datasets[dataset_name] = method_graphs
 
-            lib_vector = expand_library_dataset_from_apk(method_graphs, model, lib_name)
 
         else: 
             if not os.path.exists(os.path.join(detection_dataset_root, 'ast_dataset', 'processed', 'data.pt')):  
                 sizes = sizes_dict[lib_name]
-                dot_files, label_mapping = get_dot_files_with_labels(out_dir, sizes)
-                method_graphs = ast.create_dataset_from_dot_files(dot_files, name_tuple, list(label_mapping.keys())) 
+                filter_dict = load_dictionary(os.path.join('libraries', lib_name, 'classes_first_children.json'))
+                dot_files, label_mapping = get_dot_files_with_labels(out_dir, sizes, filter_dict)
+                file_mapping = files_dict[lib_name]
+                if dot_files:
+                    method_graphs = ast.create_dataset_from_dot_files(dot_files, name_tuple, list(label_mapping.keys()))
+                    save_mapping(label_mapping, detection_dataset_root, 'label_mapping.json')
+                    save_mapping(file_mapping, detection_dataset_root, 'file_mapping.json')
+                else:
+                    continue
                 all_datasets[dataset_name] = method_graphs
             else:
                 try:
                     method_graphs = ast.CustomASTDataset.load_dataset_from_root(os.path.join(detection_dataset_root, 'ast_dataset'))
+                    label_mapping_path = os.path.join(detection_dataset_root, 'label_mapping.json')
+                    file_mapping_path = os.path.join(detection_dataset_root, 'file_mapping.json')
+                    label_mapping = load_dictionary(label_mapping_path)
+                    file_mapping = load_dictionary(file_mapping_path)
                 except FileNotFoundError as e:
                     print(e)
-        lib_vector = detect_library_in_apk(method_graphs, model, label_mapping)
+            lib_vector = detect_library_in_apk(method_graphs, model, lib_name, file_mapping, label_mapping)
 
-        for i, int in enumerate(lib_vector):
-            if i == 0:
-                continue
-            if int > 0:
+        for field in lib_vector[1:]:
+            if field > 0:
                 detected_libs_model.append(lib_name)
-        print(f"string search: {detected_libs_string}, model: {lib_vector}") 
+                break
+        print(f"Library Vector for {lib_name}: {lib_vector}")
+    print(f"Libraries detected in {apk_name}:")
+    print(f"string search: {detected_libs_string}, model: {detected_libs_model}") 
 """
 models = {}
 for name in sizes_dict.keys():
