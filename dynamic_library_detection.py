@@ -2,7 +2,6 @@ import os
 import torch
 import json
 import glob
-from collections import OrderedDict
 from torch_geometric.loader import DataLoader
 from models.gcn import ASTNN
 from utils import text_stripper as strip
@@ -102,6 +101,7 @@ def detect_library_in_apk(apk_ast_data, model, lib_name, file_mapping, label_map
                             library_vector[pred.item()] += 1
     for idx, field in enumerate(library_vector[1:]):
         if field > 2:
+            print(f"suspiciously many instances of class {idx+1}, replacing class...")
             library_vector[idx+1] = 0
             name_list = lib_name.rsplit('-', 1)
             dot_dir = os.path.join('data', 'jars', 'workspace', name_list[0], name_list[1], 'out')
@@ -182,7 +182,6 @@ def expand_library_dataset_from_apk(
                     labels.append(label)
     try:
         training_dataset = ast.CustomASTDataset.load_dataset_from_root(lib_dataset_path)
-        print("Dataset loaded successfully!")
     except FileNotFoundError as e:
         print(e)
     training_dataset.add_data(training_data, labels)
@@ -192,7 +191,8 @@ def expand_library_dataset_from_apk(
         library_name=lib_name,
         loader=train_loader,
         batch_size=batch_size
-    )   
+    )
+    print("adding ASTs with high probability of matching classes and retraining model")   
     trainer.train_and_evaluate(epochs=300)
     return library_vector
 
@@ -220,14 +220,12 @@ def save_mapping(label_mapping, dataset_root, name):
     label_mapping_path = os.path.join(dataset_root, name)
     with open(label_mapping_path, "w") as f:
         json.dump(label_mapping, f, indent=4)
-    print(f"Label mapping saved to {label_mapping_path}")
 
 def load_dictionary(path):
 
     if os.path.exists(path):
         with open(path, "r") as f:
             dict = {int(k): v for k, v in json.load(f).items()}
-        print(f"Dictionary loaded from {path}")
         return dict
     else:
         print(f"No dictionary found at {path}")
@@ -277,10 +275,11 @@ classed_dot_files = []
 labels = []   
 
 for out_dir, apk_name in out_dirs_apk_names:
+    print(f"scanning: {apk_name}")
     detected_libs_string = []
     detected_libs_model = []
     for lib_name in sizes_dict.keys():
-
+        print(f"trying to detect {lib_name}")
         detection_dataset_root = os.path.join('detection', apk_name, lib_name)
         model = ASTNN().to(device)
         model.load_state_dict(torch.load(f'libraries/{lib_name}/{lib_name}_gnn_weights.pt', map_location=device))
@@ -297,7 +296,6 @@ for out_dir, apk_name in out_dirs_apk_names:
         if lib_apk_files:
             detected_libs_string.append(lib_name)
             if not os.path.exists(os.path.join(detection_dataset_root, 'ast_dataset', 'processed', 'data.pt')):
-                print(f"Creating dataset for library '{lib_name}' with data from '{apk_name}'...")
                 lib_graph_classes = get_graph_names_and_indexes(lib_dot_dir)  
                 
                 for graph_name, index in lib_graph_classes:

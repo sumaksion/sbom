@@ -8,14 +8,13 @@ def process_lib_files(input_dir, joern_workspace="data/jars/workspace", detectin
 
     out_dirs = []
     if not os.path.isdir(input_dir):
-        raise ValueError(f"Input directory '{input_dir}' does not exist.")
+        raise ValueError(f"'{input_dir}' does not exist.")
 
     for file in os.listdir(input_dir):
         if file.endswith('.aar'):
             aar_path, aar_name = generate_new_name(input_dir, file) 
             new_jar_path = os.path.join(input_dir, f"{aar_name}.jar")
             if os.path.exists(new_jar_path):
-                print(f"Jar file '{new_jar_path}' already exists. Skipping extraction for '{file}'.")
                 continue
 
             with zipfile.ZipFile(aar_path, 'r') as zip_ref:
@@ -56,8 +55,6 @@ def process_lib_files(input_dir, joern_workspace="data/jars/workspace", detectin
                continue
            os.makedirs(sub_dir, exist_ok=False)
 
-        print(f"Importing '{jar_file}' into Joern workspace...")
-
         script = os.path.expanduser('~/sbom/utils/joern.sc')
         param_path = f"filePath={jar_file}"
         param_name = f"libName={jar_name}"
@@ -86,14 +83,12 @@ def process_lib_files(input_dir, joern_workspace="data/jars/workspace", detectin
             print(f"Error: Command failed for '{jar_file}' with return code {e.returncode}. Cleaning up...")
             if os.path.exists(sub_dir):
                 shutil.rmtree(sub_dir)
-                print(f"Deleted directory '{sub_dir}' due to failure.")
             if os.path.exists(lib_dir) and not os.listdir(lib_dir):  
                 os.rmdir(lib_dir)
-                print(f"Deleted empty parent directory '{lib_dir}'.")
 
         #shutil.move(jar_file, os.path.join(input_dir, 'processed'))
         out_dirs.append((export_dir, jar_name))
-        print(f"Finished processing '{jar_file}'. ASTs are saved in '{export_dir}'.")
+        print(f"Finished processing '{jar_file}'. ASTs in '{export_dir}'.")
 
     return out_dirs
 
@@ -103,8 +98,6 @@ def generate_new_name(input_dir, file):
     return path, name
 
 def convert_dex_to_jar(dex_path, jar_path, dex2jar_path=os.path.expanduser('~/dex-tools-v2.4/d2j-dex2jar.sh')):
-        
-    print(f"Converting {dex_path} to {os.path.basename(jar_path)}...")
             
     try:
         result = subprocess.run(
@@ -114,9 +107,7 @@ def convert_dex_to_jar(dex_path, jar_path, dex2jar_path=os.path.expanduser('~/de
             text=True
             )
                 
-        if result.returncode == 0:
-            print(f"Successfully converted {dex_path} to {os.path.basename(jar_path)}")
-        else:
+        if result.returncode != 0:
             print(f"Error converting {dex_path}:\n{result.stderr}")
                     
     except Exception as e:

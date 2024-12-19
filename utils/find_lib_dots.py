@@ -1,5 +1,4 @@
 import os
-import shutil
 
 def find_lib_dot_files(src_dir, search_string, max_size, min_size):
 
