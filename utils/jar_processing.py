@@ -9,12 +9,14 @@ def process_lib_files(input_dir, joern_workspace="data/jars/workspace", detectin
     out_dirs = []
     if not os.path.isdir(input_dir):
         raise ValueError(f"'{input_dir}' does not exist.")
-
+    processed_dir = os.path.join(input_dir, 'processed')
+    os.makedirs(processed_dir, exist_ok=True)
     for file in os.listdir(input_dir):
         if file.endswith('.aar'):
             aar_path, aar_name = generate_new_name(input_dir, file) 
             new_jar_path = os.path.join(input_dir, f"{aar_name}.jar")
             if os.path.exists(new_jar_path):
+                move_file_after_processing(file, input_dir, processed_dir)
                 continue
 
             with zipfile.ZipFile(aar_path, 'r') as zip_ref:
@@ -24,10 +26,14 @@ def process_lib_files(input_dir, joern_workspace="data/jars/workspace", detectin
                         new_jar_path = os.path.join(input_dir, f"{aar_name}.jar")
                         os.rename(extracted_path, new_jar_path)
 
+            move_file_after_processing(file, input_dir, processed_dir)
+
         if file.endswith('.dex'):
             dex_path, dex_name = generate_new_name(input_dir, file)
             new_jar_path = os.path.join(input_dir, f"{dex_name}.jar")
             convert_dex_to_jar(dex_path, new_jar_path)
+            move_file_after_processing(file, input_dir, processed_dir)
+            
 
     jar_files = [f for f in os.listdir(input_dir) if f.endswith('.jar')]
 
@@ -45,14 +51,18 @@ def process_lib_files(input_dir, joern_workspace="data/jars/workspace", detectin
 
             if os.path.exists(sub_dir):
                 out_dirs.append((os.path.join(sub_dir, 'out'), jar_name + '-' + jar_number))
+                move_file_after_processing(jar_file, input_dir, processed_dir)
                 continue
             os.makedirs(sub_dir, exist_ok=False)
         else:
            jar_name = os.path.splitext(jar_file)[0]
+           lib_dir = os.path.join(joern_workspace, jar_name)
            sub_dir = os.path.join(joern_workspace, jar_name)
            if os.path.exists(sub_dir):
-               out_dirs.append((os.path.join(sub_dir, 'out'), jar_name))
-               continue
+                out_dirs.append((os.path.join(sub_dir, 'out'), jar_name))
+
+                move_file_after_processing(jar_file, input_dir, processed_dir)
+                continue
            os.makedirs(sub_dir, exist_ok=False)
 
         script = os.path.expanduser('~/sbom/utils/joern.sc')
@@ -87,8 +97,10 @@ def process_lib_files(input_dir, joern_workspace="data/jars/workspace", detectin
                 os.rmdir(lib_dir)
 
         #shutil.move(jar_file, os.path.join(input_dir, 'processed'))
-        out_dirs.append((export_dir, jar_name))
+        out_dirs.append((os.path.join(sub_dir, 'out'), jar_name))
         print(f"Finished processing '{jar_file}'. ASTs in '{export_dir}'.")
+
+        move_file_after_processing(jar_file, input_dir, processed_dir)
 
     return out_dirs
 
@@ -96,6 +108,12 @@ def generate_new_name(input_dir, file):
     path = os.path.join(input_dir, file)
     name = os.path.splitext(file)[0]  
     return path, name
+
+def move_file_after_processing(file, input_dir, processed_dir):
+        source_file = os.path.join(input_dir, file)
+        destination_file = os.path.join(processed_dir, file)
+        if os.path.exists(source_file) and not os.path.isdir(source_file):
+            shutil.move(source_file, destination_file)
 
 def convert_dex_to_jar(dex_path, jar_path, dex2jar_path=os.path.expanduser('~/dex-tools-v2.4/d2j-dex2jar.sh')):
             

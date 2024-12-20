@@ -282,8 +282,11 @@ for out_dir, apk_name in out_dirs_apk_names:
         print(f"trying to detect {lib_name}")
         detection_dataset_root = os.path.join('detection', apk_name, lib_name)
         model = ASTNN().to(device)
-        model.load_state_dict(torch.load(f'libraries/{lib_name}/{lib_name}_gnn_weights.pt', map_location=device))
-
+        try:
+            model.load_state_dict(torch.load(f'libraries/{lib_name}/{lib_name}_gnn_weights.pt', map_location=device))
+        except FileNotFoundError as e:
+            print("No model has been trained for this datset")
+            continue
         search_string = lib_name.split("-")[0]
         lib_number = lib_name.split("-")[-1]
         max_size = max(sizes_dict[lib_name], key=lambda x: x[0])[0] + 1
