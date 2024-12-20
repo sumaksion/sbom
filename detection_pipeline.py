@@ -96,8 +96,7 @@ def compare_dex_files(apk_name):
         print("All matched")
 
     return all_matched
-
-def copy_and_run_dynamic_detection(apk_name, user):
+def copy_file(apk_name, user):
     try:
         source_file = os.path.join(apk_name, "classes03.dex")
     except FileNotFoundError as e:
@@ -111,9 +110,13 @@ def copy_and_run_dynamic_detection(apk_name, user):
     try:
         shutil.copy(source_file, destination_file)
         print(f"Copied {source_file} to {destination_file}")
+        return True
     except FileNotFoundError:
         print(f"Error: {source_file} not found.")
         return False
+
+def run_dynamic_detection():
+
     if os.name == "nt":
         try:
             subprocess.run([
@@ -152,12 +155,11 @@ def process_apks(apk_directory):
             package_name = apk_name  
             if start_app(package_name):
                 if memory_dump(apk_name):
-                    copy_and_run_dynamic_detection(apk_name, 'johannes')
                     stop_app(package_name)
-
+                    copy_file(apk_name, 'johannes')
             uninstall_apk(package_name)
-
         print(f"Finished processing {apk_name}\n")
+    run_dynamic_detection(apk_name, 'johannes')
 
 if __name__ == '__main__':
     apk_directory = 'apks'
