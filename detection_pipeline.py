@@ -2,6 +2,8 @@ import os
 import subprocess
 import zipfile
 import shutil
+from batch_baksmali import disassemble_classes_in_directory as baksmali
+from detect_lib_by_file_structure import FileStructureLibDetector 
 
 """
 requires a running android device with adb root and running frida server on device
@@ -11,8 +13,6 @@ https://github.com/hluwa/frida-dexdump
 
 apk files should be in apk folder
 
-if running emulator on windows, have this file on windows and everything else in the given file structure in wsl
-replace johannes with your linux username and replace Ubuntu with your linux distro if not running Ubuntu
 
 """
 def run_command(command):
@@ -33,7 +33,11 @@ def install_apk(apk_path):
 
 def start_app(package_name):
     print(f"Starting app: {package_name}")
-    return run_command(['adb', 'shell', 'monkey', '-p', package_name, '-c', 'android.intent.category.LAUNCHER', '1'])
+    for i in range(9):
+        started = run_command(['adb', 'shell', 'monkey', '-p', package_name, '-c', 'android.intent.category.LAUNCHER', '1'])
+        if started == True:
+            break
+    return started
 
 def stop_app(package_name):
     print(f"Stopping app: {package_name}")
@@ -45,76 +49,14 @@ def uninstall_apk(package_name):
 
 def memory_dump(apk_name):
     
+    out_dir = os.path.join('dumps', apk_name)
+    os.makedirs(out_dir, exist_ok=True)
     try:
-        if not os.path.exists(apk_name):
-            os.makedirs(apk_name, exist_ok=False)
-        else:
-            return True
-    except Exception as e:
-        print(f"Failed to create directory '{apk_name}': {e}")
-        return False
-    
-    try:
-        subprocess.run(f'frida-dexdump -d -FU -o "{apk_name}"', shell=True, check=True)
-        return True
+        subprocess.run(f'frida-dexdump -d -FU -o "{out_dir}"', shell=True, check=True)
+        return out_dir
     except subprocess.CalledProcessError as e:
         print(f"Memory dump failed for {apk_name}: {e}")
-        return False
-
-def extract_apk(apk_path, apk_name):
-
-    zip_path = apk_path.replace(".apk", ".zip")
-    os.rename(apk_path, zip_path)
-    extract_dir = apk_name + "_unzipped"
-    os.makedirs(extract_dir, exist_ok=True)
-    print(f"Extracting {zip_path} to {extract_dir}")
-    
-    with zipfile.ZipFile(zip_path, 'r') as zip_ref:
-        zip_ref.extractall(extract_dir)
-
-def compare_dex_files(apk_name):
-    extracted_dir = apk_name+"_unzipped"
-    dump_dir = apk_name  
-
-    extracted_dex_files = [os.path.getsize(os.path.join(extracted_dir, f)) for f in os.listdir(extracted_dir) if f.endswith('.dex')]
-    dump_dex_files = [os.path.getsize(os.path.join(dump_dir, f)) for f in os.listdir(dump_dir) if f.endswith('.dex')]
-
-    if not extracted_dex_files or not dump_dex_files:
-        return False
-    
-    dump_file_sizes = dump_dex_files.copy()
-
-    all_matched = True
-
-    for size in extracted_dex_files:
-        if size in dump_file_sizes:
-            dump_file_sizes.remove(size)  
-        else:
-            all_matched = False
-
-    if all_matched:
-        print("All matched")
-
-    return all_matched
-def copy_file(apk_name, user):
-    try:
-        source_file = os.path.join(apk_name, "classes03.dex")
-    except FileNotFoundError as e:
-        print(e)
-        return False
-    destination_dir = os.path.expanduser('~\sbom\data\dexs')
-    if os.name == "nt":
-        destination_dir = os.path.join(r'\\wsl.localhost', 'Ubuntu', 'home', user, 'sbom', 'data', 'dexs')
-    destination_file = os.path.join(destination_dir, f"{apk_name}_classes03.dex")
-
-    try:
-        shutil.copy(source_file, destination_file)
-        print(f"Copied {source_file} to {destination_file}")
-        return True
-    except FileNotFoundError:
-        print(f"Error: {source_file} not found.")
-        return False
-
+        return None
 def run_dynamic_detection():
 
     if os.name == "nt":
@@ -140,6 +82,29 @@ def run_dynamic_detection():
         except subprocess.CalledProcessError as e:
             print(e)
             return False
+  
+def copy_directory(apk_name, user):
+    source_dir = apk_name
+    destination_dir = os.path.expanduser('~/sbom/data/dexs')
+
+    if os.name == "nt":
+        destination_dir = os.path.join(r'\\wsl.localhost', 'Ubuntu', 'home', user, 'sbom', 'data', 'dexs')
+
+    destination_dir = os.path.join(destination_dir, os.path.basename(apk_name))
+
+    try:
+        shutil.copytree(source_dir, destination_dir)
+        print(f"Copied directory {source_dir} to {destination_dir}")
+        return True
+    except FileNotFoundError:
+        print(f"Error: Source directory {source_dir} not found.")
+        return False
+    except FileExistsError:
+        print(f"Error: Destination directory {destination_dir} already exists.")
+        return False
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+        return False
 
 
 def process_apks(apk_directory):
@@ -150,20 +115,36 @@ def process_apks(apk_directory):
         apk_path = os.path.join(apk_directory, apk_file)
 
         print(f"Processing APK: {apk_name}")
-
-        if install_apk(apk_path):
-            package_name = apk_name  
-            if start_app(package_name):
-                if memory_dump(apk_name):
-                    stop_app(package_name)
-                    copy_file(apk_name, 'johannes')
-            uninstall_apk(package_name)
+        dump_dir = os.path.join('dumps', apk_name)
+        if not os.path.exists(dump_dir):
+            if install_apk(apk_path):
+                package_name = apk_name  
+                if start_app(package_name):
+                    dump_dir = memory_dump(apk_name)
+                    if dump_dir:
+                        stop_app(package_name)
+                uninstall_apk(package_name)
+        
+        target_directory = os.path.join('compiled_smali', apk_name)
+        if not os.path.exists(os.path.join(target_directory, f'{apk_name}_classes03.dex' )):
+            baksmali(dump_dir)
+            detector = FileStructureLibDetector(dump_dir)
+            target_directory = detector.detect()
+        if copy_directory(target_directory, 'johannes'):
+            run_dynamic_detection()
+        src = os.path.join(directory, apk_file )
+        dst_dir = os.path.join(directory, 'processed')
+        os.makedirs(dst_dir, exist_ok=True)
+        dst = os.path.join(dst_dir, os.path.basename(apk_file))
+        try:
+            shutil.move(src, dst)
+            print(f"Moved {apk_file} to {dst}")
+        except Exception as e: 
+            print(f"Could not move {apk_file} to {dst_dir}: {e}")
         print(f"Finished processing {apk_name}\n")
-    run_dynamic_detection(apk_name, 'johannes')
 
-if __name__ == '__main__':
-    apk_directory = 'apks'
-    if not os.path.exists(apk_directory):
-        print(f"APK directory '{apk_directory}' not found.")
-    else:
-        process_apks(apk_directory)
+if __name__ == "__main__":
+    directory = input("Enter the directory path: ").strip()
+    if os.path.isdir(directory):
+        process_apks(directory)
+        
