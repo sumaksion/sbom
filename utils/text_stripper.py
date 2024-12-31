@@ -1,5 +1,4 @@
 import re
-import networkx as nx
 
 def process_graph_file(input_file_path, output_file_path):
     try:
@@ -14,12 +13,11 @@ def process_graph_file(input_file_path, output_file_path):
                 else:
                     outfile.write(line)
         
-        print(f"Processed file saved as '{output_file_path}'")
     
     except FileNotFoundError:
-        print(f"Error: File '{input_file_path}' not found.")
+        print(f"'{input_file_path}' not found.")
     except Exception as e:
-        print(f"An error occurred: {e}")
+        print(e)
 
 def string_stripper(line: str):
     

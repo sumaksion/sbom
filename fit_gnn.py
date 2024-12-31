@@ -1,7 +1,10 @@
 import os
+import random
 import torch
+import shutil
 from library_gnn_trainer import LibraryGNNTrainer
 from torch_geometric.loader import DataLoader
+from torch.utils.data import ConcatDataset
 from utils import jar_processing as jar
 from utils import library_ast_data as ast
 
@@ -16,8 +19,36 @@ def find_out_directories(data_path):
                 out_directories.append((os.path.join(root, dir_name), lib_name))
     return out_directories
 
+def move_file_after_processing(file, input_dir, processed_dir):
+    source_file = os.path.join(input_dir, file)
+    destination_file = os.path.join(processed_dir, file)
+    if os.path.exists(source_file) and not os.path.isdir(source_file):
+        shutil.move(source_file, destination_file)
+
+def split_datasets_for_eval(all_datasets, num_eval_datasets=7):
+    # Randomly shuffle and pick num_eval_datasets datasets for the first loader
+    lib_names = list(all_datasets.keys())
+    random.shuffle(lib_names)
+
+    eval_dataset_1 = {}
+    eval_dataset_2 = {}
+
+    # Assign first `num_eval_datasets` to eval_loader_1
+    eval_loader_1_names = lib_names[:num_eval_datasets]
+    for name in eval_loader_1_names:
+        eval_dataset_1[name] = all_datasets[name]
+
+    # Assign remaining datasets to eval_loader_2
+    eval_loader_2_names = lib_names[num_eval_datasets:2*num_eval_datasets]
+    for name in eval_loader_2_names:
+        eval_dataset_2[name] = all_datasets[name]
+
+    return eval_dataset_1, eval_dataset_2
+
 jar_path = "data/jars"
 batch_size = 15
+processed_dir = os.path.join(jar_path, 'processed')
+os.makedirs(processed_dir, exist_ok=True)
 
 out_dirs_with_lib_names = jar.process_lib_files(jar_path, detecting=False)
 
@@ -27,8 +58,10 @@ all_datasets = {}
 
 for out_dir, lib_name in out_dirs_with_lib_names:
     method_graphs = ast.create_dataset_from_dir(out_dir, batch_size, lib_name, eval=False)
+    if not method_graphs:
+        continue
     all_datasets[lib_name] = method_graphs
-
+eval_datasets_1, eval_datasets_2 = split_datasets_for_eval(all_datasets, num_eval_datasets=7)
 for train_lib_name, train_dataset in all_datasets.items():
     print(f"training model for '{train_lib_name}'...")
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
@@ -38,36 +71,53 @@ for train_lib_name, train_dataset in all_datasets.items():
         batch_size=batch_size
     )
     
-    trainer.train_and_evaluate(epochs=300)
+    acc = trainer.train_and_evaluate(epochs=300)
     
     all_certainties = [] 
 
-    for eval_lib_name, eval_dataset in all_datasets.items():
-        if eval_lib_name == train_lib_name:
-            continue  
-
-        eval_loader = DataLoader(eval_dataset, batch_size=batch_size, shuffle=False)
+    if train_lib_name in eval_datasets_1.keys():
+        eval_datasets = eval_datasets_2
+    else:
+        eval_datasets = eval_datasets_1
+    if eval_datasets:
+        eval_dataset = ConcatDataset(list(eval_datasets.values())   )
+        eval_loader = DataLoader(eval_dataset, batch_size=64, shuffle=False)
         trainer.model.eval()
+        for i in range(5):
+            with torch.no_grad():
+                for data in eval_loader:
+                    out = trainer.model(data)
+                    probabilities = torch.softmax(out, dim=1)
+                    certainty, pred = torch.max(probabilities, dim=1)
+                    
+                    for i, graph_certainty in enumerate(certainty):
+                        all_certainties.append((graph_certainty.item(), data[i]))
+            batch_size = 15
+            all_certainties = sorted(all_certainties, key=lambda x: x[0], reverse=True)
+            total_certainties = len(all_certainties)
 
-        with torch.no_grad():
-            for data in eval_loader:
-                out = trainer.model(data)
-                probabilities = torch.softmax(out, dim=1)
-                certainty, pred = torch.max(probabilities, dim=1)
-                
-                for i, graph_certainty in enumerate(certainty):
-                    all_certainties.append((graph_certainty.item(), data[i], eval_lib_name))
+            start_idx = (i * batch_size) % total_certainties
+            end_idx = ((i + 1) * batch_size) % total_certainties
 
-    all_certainties = sorted(all_certainties, key=lambda x: x[0], reverse=True)[:15]
-    top_graphs = [graph for _, graph, _ in all_certainties]
+            if start_idx < end_idx:
+                certainties_batch = all_certainties[start_idx:end_idx]
+            else:
+                certainties_batch = all_certainties[start_idx:] + all_certainties[:end_idx]
 
-    print(f"adding most confidently incorrect to '{train_lib_name}' as class 0...")
-    train_dataset.add_class_0(top_graphs)
 
-    expanded_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+            top_graphs = [graph for _, graph in certainties_batch]
 
-    trainer.loader = expanded_loader
+            print(f"adding most confidently incorrect to '{train_lib_name}' as class 0...")
+            train_dataset.add_class_0(top_graphs)
 
-    print(f"training model for '{train_lib_name}' on dataset with class 0...")
-    trainer.train_and_evaluate(epochs=150)  
-    
+            expanded_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
+
+            trainer.loader = expanded_loader
+
+            print(f"training model for '{train_lib_name}' on dataset with class 0...")
+            accuracy = trainer.train_and_evaluate(epochs=150)
+            if accuracy > 0.85:
+                break  
+            print(f"Last accuracy: {accuracy}")
+    lib_file = train_lib_name + '.jar'
+    move_file_after_processing(lib_file, jar_path, processed_dir)

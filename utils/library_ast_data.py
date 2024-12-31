@@ -3,11 +3,7 @@ from model2vec import StaticModel
 import torch
 import glob
 import json
-import re
-from multiprocessing import Pool, cpu_count
-import math
 from torch_geometric.data import InMemoryDataset, Data
-from sentence_transformers import SentenceTransformer
 import networkx as nx
 from utils import text_stripper as strip 
 
@@ -115,39 +111,35 @@ class CustomASTDataset(InMemoryDataset):
             with open(sizes_path, 'r') as f:
                 sizes_data = json.load(f)
         else:
-            print("Can't replace class file in empty dataset!")
+            print("accessed wrong kind of dataset")
             return
 
-        # Find and remove the existing file associated with the class
         if str(class_label) in sizes_data:
             existing_file = sizes_data[str(class_label)]['file']
             preprocessed_path = os.path.join(self.preprocessed_dir, existing_file)
             if os.path.exists(preprocessed_path):
                 os.remove(preprocessed_path)
 
-        # Preprocess the new dot file
         preprocessed_path = os.path.join(self.preprocessed_dir, os.path.basename(dot_file))
         if not os.path.exists(preprocessed_path):
             strip.process_graph_file(dot_file, preprocessed_path)
 
-        # Load and convert the new data
         new_data = self.load_and_convert(preprocessed_path, class_label)
         if isinstance(new_data, Data):
             new_data_list.append(new_data)
         else:
-            print("Something went wrong")
+            print("failed to replace class")
             return
 
         self.data, self.slices = self.collate(new_data_list)
         self.save_dataset()
 
-        # Update classes_first_children.json
         classes_first_children_path = os.path.join(lib_dir, 'classes_first_children.json')
         if os.path.exists(classes_first_children_path):
             with open(classes_first_children_path, 'r') as f:
                 class_data = json.load(f)
         else:
-            print("Can't replace class file in empty dataset!")
+            print("accessed wrong kind of dataset")
             return
 
         strings_list = strip.get_ast_first_children(dot_file)
@@ -229,6 +221,9 @@ def create_dataset_from_dir(directory, top_n, lib_name, eval=True):
         dataset = CustomASTDataset.load_dataset_from_root(os.path.join(lib_path, 'ast_dataset'))
         return dataset
     dot_files = glob.glob(os.path.join(directory, '*.dot'))
+    if not dot_files:
+        print("No dot files found")
+        return None
     dot_files = sorted(dot_files, key=os.path.getsize, reverse=True)[:top_n]
 
     lib_path = f'detection/{lib_name}' if eval else f'libraries/{lib_name}'
