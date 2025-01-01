@@ -25,25 +25,32 @@ def move_file_after_processing(file, input_dir, processed_dir):
     if os.path.exists(source_file) and not os.path.isdir(source_file):
         shutil.move(source_file, destination_file)
 
-def split_datasets_for_eval(all_datasets, num_eval_datasets=7):
-    # Randomly shuffle and pick num_eval_datasets datasets for the first loader
+
+def select_for_eval(all_datasets, num_eval_datasets=7):
+
     lib_names = list(all_datasets.keys())
     random.shuffle(lib_names)
 
     eval_dataset_1 = {}
     eval_dataset_2 = {}
 
-    # Assign first `num_eval_datasets` to eval_loader_1
-    eval_loader_1_names = lib_names[:num_eval_datasets]
-    for name in eval_loader_1_names:
-        eval_dataset_1[name] = all_datasets[name]
+    libs_in_eval_1 = set()
+    libs_in_eval_2 = set()
 
-    # Assign remaining datasets to eval_loader_2
-    eval_loader_2_names = lib_names[num_eval_datasets:2*num_eval_datasets]
-    for name in eval_loader_2_names:
-        eval_dataset_2[name] = all_datasets[name]
+    for name in lib_names:
+        if len(eval_dataset_1) >= num_eval_datasets and len(eval_dataset_2) >= num_eval_datasets:
+                break
+        base_lib = os.path.splitext(name)[0].rsplit('-', 1)[0]
+        if base_lib not in libs_in_eval_2 and len(eval_dataset_1) <= num_eval_datasets:
+            eval_dataset_1[name] = all_datasets[name]
+            libs_in_eval_1.add(base_lib)
+            continue
+        elif base_lib not in libs_in_eval_1 and len(eval_dataset_2) <= num_eval_datasets:
+            eval_dataset_2[name] = all_datasets[name]
+            libs_in_eval_2.add(base_lib)            
 
     return eval_dataset_1, eval_dataset_2
+
 
 jar_path = "data/jars"
 batch_size = 15
@@ -61,7 +68,7 @@ for out_dir, lib_name in out_dirs_with_lib_names:
     if not method_graphs:
         continue
     all_datasets[lib_name] = method_graphs
-eval_datasets_1, eval_datasets_2 = split_datasets_for_eval(all_datasets, num_eval_datasets=7)
+eval_datasets_1, eval_datasets_2 = select_for_eval(all_datasets, num_eval_datasets=7)
 for train_lib_name, train_dataset in all_datasets.items():
     print(f"training model for '{train_lib_name}'...")
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
@@ -79,6 +86,7 @@ for train_lib_name, train_dataset in all_datasets.items():
         eval_datasets = eval_datasets_2
     else:
         eval_datasets = eval_datasets_1
+
     if eval_datasets:
         eval_dataset = ConcatDataset(list(eval_datasets.values())   )
         eval_loader = DataLoader(eval_dataset, batch_size=64, shuffle=False)
@@ -86,6 +94,7 @@ for train_lib_name, train_dataset in all_datasets.items():
         for i in range(5):
             with torch.no_grad():
                 for data in eval_loader:
+                    data = data.to(trainer.device)
                     out = trainer.model(data)
                     probabilities = torch.softmax(out, dim=1)
                     certainty, pred = torch.max(probabilities, dim=1)
@@ -108,7 +117,7 @@ for train_lib_name, train_dataset in all_datasets.items():
             top_graphs = [graph for _, graph in certainties_batch]
 
             print(f"adding most confidently incorrect to '{train_lib_name}' as class 0...")
-            train_dataset.add_class_0(top_graphs)
+            train_dataset.add_class_0(top_graphs, trainer.device)
 
             expanded_loader = DataLoader(train_dataset, batch_size=64, shuffle=True)
 

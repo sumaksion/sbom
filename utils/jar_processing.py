@@ -56,19 +56,17 @@ def process_lib_files(input_dir, detecting=True):
                     out_dirs.append((os.path.join(sub_dir, 'out'), jar_name + '-' + jar_number))
                 continue
 
-            os.makedirs(sub_dir, exist_ok=True)
         else:
             jar_name = os.path.splitext(jar_file)[0]
             lib_dir = os.path.join(joern_workspace, jar_name)
             sub_dir = os.path.join(joern_workspace, jar_name)
 
             if os.path.exists(os.path.join(sub_dir, 'out', '0-ast.dot')):
-                out_dirs.append((os.path.join(sub_dir, 'out'), jar_name))
+                out_dirs.append((os.path.join(sub_dir, 'out'), jar_name + '-' + jar_number))
                 continue
 
-            os.makedirs(sub_dir, exist_ok=False)
 
-        script = os.path.expanduser('~/sbom/utils/joern.sc')
+        script = os.path.expanduser('~/projects/sbom/utils/joern.sc')
         param_path = f"filePath={jar_file}"
         param_name = f"libName={jar_name}"
 
@@ -80,14 +78,16 @@ def process_lib_files(input_dir, detecting=True):
         try:
             subprocess.run(command, shell=True, cwd=input_dir, check=True)
             print(f"Exporting ASTs for '{jar_file}'...")
-
+            if not os.path.exists(sub_dir):
+                os.makedirs(sub_dir, exist_ok=False)
             export_dir = os.path.join(jar_number, "out") if detecting == False else 'out'
+            #os.makedirs(os.path.join(lib_dir, export_dir), exist_ok=True)
             export_command = f"{joern_export_path} --repr ast --out {export_dir}"
             #cwd = lib_dir if detecting = False else 
             process_code = subprocess.run(export_command, cwd=lib_dir, check=True, shell=True)
-            if process_code.check_returncode() == 0:
+            if process_code.returncode == 0:
                 clean_up_lib_dir(lib_dir, sub_dir)
-                out_dirs.append((export_dir, jar_name))
+                out_dirs.append((export_dir, jar_name + '-' + jar_number))
                 print(f"Finished processing '{jar_file}'. ASTs in '{export_dir}'.")
 
         except subprocess.CalledProcessError as e:

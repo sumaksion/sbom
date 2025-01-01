@@ -156,9 +156,9 @@ class CustomASTDataset(InMemoryDataset):
             json.dump(sizes_data, f, indent=4)
 
     
-    def add_class_0(self, data_list):
+    def add_class_0(self, data_list, device):
         labels = [0] * len(data_list)
-        self.add_data(data_list, labels)
+        data_list = [data.to(device) for data in data_list]
 
     def add_data(self, data_list, labels):
     
