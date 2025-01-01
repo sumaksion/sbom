@@ -2,7 +2,7 @@ import os
 import subprocess
 import zipfile
 import shutil
-from batch_baksmali import disassemble_classes_in_directory as baksmali
+from utils.batch_baksmali import disassemble_classes_in_directory as baksmali
 from detect_lib_by_file_structure import FileStructureLibDetector 
 
 """
