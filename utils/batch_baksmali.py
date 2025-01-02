@@ -1,7 +1,7 @@
 import os
 import subprocess
 
-BAKSMALI_PATH = "baksmali.jar"
+BAKSMALI_PATH = "utils/baksmali.jar"
 
 def disassemble_class_file(class_file_path, output_dir):
     if not os.path.exists(output_dir):

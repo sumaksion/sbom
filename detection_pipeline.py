@@ -116,12 +116,12 @@ def process_apks(apk_directory):
 
         print(f"Processing APK: {apk_name}")
         dump_dir = os.path.join('dumps', apk_name)
-        if not os.path.exists(dump_dir):
+        if not os.path.exists(os.path.join(dump_dir, 'classes.dex')):
             if install_apk(apk_path):
                 package_name = apk_name  
                 if start_app(package_name):
                     dump_dir = memory_dump(apk_name)
-                    if dump_dir:
+                    if dump_dir is not None:
                         stop_app(package_name)
                 uninstall_apk(package_name)
         

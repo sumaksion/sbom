@@ -68,7 +68,8 @@ for out_dir, lib_name in out_dirs_with_lib_names:
     if not method_graphs:
         continue
     all_datasets[lib_name] = method_graphs
-eval_datasets_1, eval_datasets_2 = select_for_eval(all_datasets, num_eval_datasets=7)
+if len(all_datasets > 10) :   
+    eval_datasets_1, eval_datasets_2 = select_for_eval(all_datasets, num_eval_datasets=7)
 for train_lib_name, train_dataset in all_datasets.items():
     print(f"training model for '{train_lib_name}'...")
     train_loader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True)
@@ -81,11 +82,11 @@ for train_lib_name, train_dataset in all_datasets.items():
     acc = trainer.train_and_evaluate(epochs=300)
     
     all_certainties = [] 
-
-    if train_lib_name in eval_datasets_1.keys():
-        eval_datasets = eval_datasets_2
-    else:
-        eval_datasets = eval_datasets_1
+    if eval_datasets_1 and eval_datasets_2:
+        if train_lib_name in eval_datasets_1.keys():
+            eval_datasets = eval_datasets_2
+        else:
+            eval_datasets = eval_datasets_1
 
     if eval_datasets:
         eval_dataset = ConcatDataset(list(eval_datasets.values())   )

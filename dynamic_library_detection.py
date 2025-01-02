@@ -406,7 +406,7 @@ def filter_dictionaries(apk_name, gt_dict, sizes_dict, files_dict, output_file):
 
 
 def scan_apk(sizes_dict, files_dict, device, groundtruth = False):
-    results = {}
+
     processed_dir = 'data/dexs/processed'
     if groundtruth is True:
         gt_dict = get_json('groundtruth.json')

@@ -46,27 +46,29 @@ def process_lib_files(input_dir, detecting=True):
                 jar_number = os.path.splitext(jar_number)[0]
             else:
                 print(f"Skipping '{jar_file}' as it doesn't follow the 'libname-libnumber' pattern.")
+                bad_lib_name_dir = os.path.join(input_dir, 'incorrect_name_format')
+                os.makedirs(bad_lib_name_dir, exist_ok=True)
+                move_file_after_processing(jar_file, input_dir, bad_lib_name_dir)
                 continue
 
             lib_dir = os.path.join(joern_workspace, jar_name)
             sub_dir = os.path.join(lib_dir, jar_number)
 
             if os.path.exists(os.path.join(sub_dir, 'out', '0-ast.dot')):
-                if detecting is False:
-                    out_dirs.append((os.path.join(sub_dir, 'out'), jar_name + '-' + jar_number))
+                out_dirs.append((os.path.join(sub_dir, 'out'), jar_name + '-' + jar_number))
                 continue
 
         else:
             jar_name = os.path.splitext(jar_file)[0]
             lib_dir = os.path.join(joern_workspace, jar_name)
-            sub_dir = os.path.join(joern_workspace, jar_name)
+            sub_dir = lib_dir
 
             if os.path.exists(os.path.join(sub_dir, 'out', '0-ast.dot')):
-                out_dirs.append((os.path.join(sub_dir, 'out'), jar_name + '-' + jar_number))
+                out_dirs.append((os.path.join(sub_dir, 'out'), jar_name))
                 continue
 
 
-        script = os.path.expanduser('~/projects/sbom/utils/joern.sc')
+        script = os.path.expanduser('~/sbom/utils/joern.sc')
         param_path = f"filePath={jar_file}"
         param_name = f"libName={jar_name}"
 
@@ -86,8 +88,10 @@ def process_lib_files(input_dir, detecting=True):
             #cwd = lib_dir if detecting = False else 
             process_code = subprocess.run(export_command, cwd=lib_dir, check=True, shell=True)
             if process_code.returncode == 0:
-                clean_up_lib_dir(lib_dir, sub_dir)
-                out_dirs.append((export_dir, jar_name + '-' + jar_number))
+                if detecting is False:
+                    clean_up_lib_dir(lib_dir, sub_dir)
+                    out_dirs.append((os.path.join(sub_dir, export_dir), jar_name + '-' + jar_number))
+                else: out_dirs.append((os.path.join(sub_dir, export_dir), jar_name))
                 print(f"Finished processing '{jar_file}'. ASTs in '{export_dir}'.")
 
         except subprocess.CalledProcessError as e:
@@ -106,7 +110,7 @@ def generate_new_name(input_dir, file):
     return path, name
 
 
-def convert_dex_to_jar(dex_path, jar_path, dex2jar_path=os.path.expanduser('~/dex-tools-v2.4/d2j-dex2jar.sh')):
+def convert_dex_to_jar(dex_path, jar_path, dex2jar_path=os.path.expanduser('~/bin/dex-tools-v2.4/d2j-dex2jar.sh')):
     try:
         result = subprocess.run(
             [dex2jar_path, dex_path, "-o", jar_path],
@@ -133,7 +137,7 @@ def clean_up_lib_dir(lib_dir, sub_dir):
             continue
         
         # Check if the item name matches the version pattern
-        if not version_pattern.match(item):
+        if not version_pattern.match(item) or item == 'out':
             if os.path.isdir(item_path):
                 shutil.rmtree(item_path, ignore_errors=True)
             else:

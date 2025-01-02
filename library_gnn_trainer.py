@@ -31,7 +31,7 @@ class LibraryGNNTrainer:
     def train(self):
         self.model.train()
         for data in self.loader:
-            data.to(self.device)
+            data = data.to(self.device)
             out = self.model(data)
             loss = self.criterion(out, data.y)
             loss.backward()
@@ -42,7 +42,7 @@ class LibraryGNNTrainer:
         self.model.eval()
         correct = 0
         for data in self.loader:
-            data.to(self.device)
+            data = data.to(self.device)
             out = self.model(data)
             pred = out.argmax(dim=1)
             correct += int((pred == data.y).sum())
