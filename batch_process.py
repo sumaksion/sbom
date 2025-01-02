@@ -3,11 +3,11 @@ import shutil
 import subprocess
 
 class JarBatchProcessor:
-    def __init__(self, base_directory, target_count=30, to_process_subdir="to_process", python='~/anaconda3/envs/sbom/bin/python'):
+    def __init__(self, base_directory, target_count=30, to_process_subdir="to_process"):
         self.base_directory = base_directory
         self.target_count = target_count
         self.to_process_dir = os.path.join(base_directory, to_process_subdir)
-        self.python = os.path.expanduser(python)
+        #self.python = os.path.expanduser(python)
     def get_jar_files(self, directory):
         """Get a list of .jar files in the specified directory."""
         return [
@@ -48,7 +48,7 @@ class JarBatchProcessor:
 
             print(f"Processing batch of {len(current_jar_files)} .jar files...")
         
-            process = subprocess.run([self.python, "fit_gnn.py"])
+            process = subprocess.run(["python3", "fit_gnn.py"])
 
             print(f"Subprocess finished with return code: {process.returncode}")
 

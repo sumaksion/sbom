@@ -23,12 +23,13 @@ def get_dot_files_with_labels(file_sizes: dict, filter: dict, dot_files, toleran
     idx = 0
     label_mapping = {}
     labels = []
-    for file in dot_files[:]:
-        size = os.path.getsize(file) // 1024
-        if size < min_size:
-            dot_files.remove(file)
-        if size >= min_size:
-            break
+    if min_size > 1:
+        for file in dot_files[:]:
+            size = os.path.getsize(file) // 1024
+            if size < min_size:
+                dot_files.remove(file)
+            if size >= min_size:
+                break
     dot_files.reverse()
 
     for file in dot_files[:]:
@@ -418,7 +419,7 @@ def scan_apk(sizes_dict, files_dict, device, groundtruth = False):
         detected_libs_model = []
         detected_libs_string = []
         apk_name = os.path.basename(dir_path)
-        if gt_dict:
+        if groundtruth is True:
             output_file = os.path.join("all_apks_libs_scanned.json")
             sizes_dict, files_dict = filter_dictionaries(apk_name, gt_dict, sizes_dict, files_dict, output_file)
         mvn_google_json = get_json(os.path.join(dir_path, f'{apk_name}_results.json'))
@@ -557,4 +558,4 @@ print(f"Using device: {device}")
 sizes_dict, files_dict = collect_file_sizes()
 dir = 'data/dexs'
 
-scan_apk(sizes_dict, files_dict, device, groundtruth = True)
+scan_apk(sizes_dict, files_dict, device, groundtruth = False)

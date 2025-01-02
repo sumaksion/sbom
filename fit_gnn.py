@@ -68,7 +68,7 @@ for out_dir, lib_name in out_dirs_with_lib_names:
     if not method_graphs:
         continue
     all_datasets[lib_name] = method_graphs
-if len(all_datasets > 10) :   
+if len(all_datasets.keys()) > 10:   
     eval_datasets_1, eval_datasets_2 = select_for_eval(all_datasets, num_eval_datasets=7)
 for train_lib_name, train_dataset in all_datasets.items():
     print(f"training model for '{train_lib_name}'...")
@@ -92,7 +92,7 @@ for train_lib_name, train_dataset in all_datasets.items():
         eval_dataset = ConcatDataset(list(eval_datasets.values())   )
         eval_loader = DataLoader(eval_dataset, batch_size=64, shuffle=False)
         trainer.model.eval()
-        for i in range(5):
+        for i in range(3):
             with torch.no_grad():
                 for data in eval_loader:
                     data = data.to(trainer.device)

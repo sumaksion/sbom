@@ -101,7 +101,7 @@ def copy_directory(apk_name, user):
         return False
     except FileExistsError:
         print(f"Error: Destination directory {destination_dir} already exists.")
-        return False
+        return True
     except Exception as e:
         print(f"An unexpected error occurred: {e}")
         return False

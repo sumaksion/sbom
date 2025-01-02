@@ -62,9 +62,13 @@ def process_lib_files(input_dir, detecting=True):
             jar_name = os.path.splitext(jar_file)[0]
             lib_dir = os.path.join(joern_workspace, jar_name)
             sub_dir = lib_dir
-
             if os.path.exists(os.path.join(sub_dir, 'out', '0-ast.dot')):
                 out_dirs.append((os.path.join(sub_dir, 'out'), jar_name))
+                continue
+            already_processed_path = os.path.join('data/dexs/processed', os.path.basename(input_dir), 'workspace', os.path.basename(sub_dir), 'out' )
+            if os.path.exists(os.path.join(already_processed_path, '0-ast.dot')):
+                out_dirs.append((already_processed_path, jar_name))
+                shutil.rmtree(input_dir)
                 continue
 
 
@@ -90,8 +94,8 @@ def process_lib_files(input_dir, detecting=True):
             if process_code.returncode == 0:
                 if detecting is False:
                     clean_up_lib_dir(lib_dir, sub_dir)
-                    out_dirs.append((os.path.join(sub_dir, export_dir), jar_name + '-' + jar_number))
-                else: out_dirs.append((os.path.join(sub_dir, export_dir), jar_name))
+                    out_dirs.append((os.path.join(sub_dir, 'out'), jar_name + '-' + jar_number))
+                else: out_dirs.append((os.path.join(sub_dir, 'out'), jar_name))
                 print(f"Finished processing '{jar_file}'. ASTs in '{export_dir}'.")
 
         except subprocess.CalledProcessError as e:
@@ -127,7 +131,7 @@ def convert_dex_to_jar(dex_path, jar_path, dex2jar_path=os.path.expanduser('~/bi
 def clean_up_lib_dir(lib_dir, sub_dir):
     """Removes all files and folders in `lib_dir` except for `sub_dir` and those that match the pattern x.x.x."""
     # Define the pattern for matching versions like '1.2.3', '10.20.30', etc.
-    version_pattern = re.compile(r'^\d+(\.\d+)*$')
+    version_pattern = re.compile(r'^v?\d+(\.\d+)*$')
     
     for item in os.listdir(lib_dir):
         item_path = os.path.join(lib_dir, item)
